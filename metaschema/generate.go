@@ -1,33 +1,13 @@
-// +build ignore
-
-package main
+package metaschema
 
 import (
 	"encoding/xml"
 	"fmt"
 	"io"
-	"log"
 	"os"
-	"os/exec"
-
-	"github.com/gocomply/metaschema/metaschema"
 )
 
-const (
-	oscalRepo         = "https://github.com/usnistgov/OSCAL.git"
-	metaschemaBaseDir = "OSCAL/src/metaschema/%s"
-)
-
-func main() {
-	rmCmd := exec.Command("rm", "-rf", "OSCAL/")
-	if err := rmCmd.Run(); err != nil {
-		log.Fatal(err)
-	}
-
-	cloneCmd := exec.Command("git", "clone", "--depth", "1", oscalRepo)
-	if err := cloneCmd.Run(); err != nil {
-		log.Fatal(err)
-	}
+func Generate(metaschemaDir string) error {
 
 	metaschemaPaths := map[string]string{
 		"validation_root": "oscal_metadata_metaschema.xml",
@@ -40,30 +20,26 @@ func main() {
 	}
 
 	for _, metaschemaPath := range metaschemaPaths {
-		f, err := os.Open(fmt.Sprintf(metaschemaBaseDir, metaschemaPath))
+		f, err := os.Open(fmt.Sprintf(metaschemaDir, metaschemaPath))
 		if err != nil {
-			log.Fatal(err)
+			return err
 		}
 		defer f.Close()
 
-		meta, err := decode(f)
+		meta, err := decode(metaschemaDir, f)
 		if err != nil {
-			log.Fatal(err)
+			return err
 		}
 
-		if err := metaschema.GenerateTypes(meta); err != nil {
-			log.Fatalf("Error generating go types for metaschema: %s", err)
+		if err := GenerateTypes(meta); err != nil {
+			return err
 		}
 	}
-
-	rmCmd = exec.Command("rm", "-rf", "OSCAL/")
-	if err := rmCmd.Run(); err != nil {
-		log.Fatal(err)
-	}
+	return nil
 }
 
-func decode(r io.Reader) (*metaschema.Metaschema, error) {
-	var meta metaschema.Metaschema
+func decode(metaschemaDir string, r io.Reader) (*Metaschema, error) {
+	var meta Metaschema
 
 	d := xml.NewDecoder(r)
 
@@ -75,13 +51,13 @@ func decode(r io.Reader) (*metaschema.Metaschema, error) {
 		if imported.Href == nil {
 			return nil, fmt.Errorf("import element in %s is missing 'href' attribute", r)
 		}
-		imf, err := os.Open(fmt.Sprintf(metaschemaBaseDir, imported.Href.URL.String()))
+		imf, err := os.Open(fmt.Sprintf(metaschemaDir, imported.Href.URL.String()))
 		if err != nil {
 			return nil, err
 		}
 		defer imf.Close()
 
-		importedMeta, err := decode(imf)
+		importedMeta, err := decode(metaschemaDir, imf)
 		if err != nil {
 			return nil, err
 		}
