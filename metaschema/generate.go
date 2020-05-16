@@ -20,7 +20,7 @@ func Generate(metaschemaDir string) error {
 	}
 
 	for _, metaschemaPath := range metaschemaPaths {
-		f, err := os.Open(fmt.Sprintf(metaschemaDir, metaschemaPath))
+		f, err := os.Open(fmt.Sprintf("%s/%s", metaschemaDir, metaschemaPath))
 		if err != nil {
 			return err
 		}
@@ -51,7 +51,7 @@ func decode(metaschemaDir string, r io.Reader) (*Metaschema, error) {
 		if imported.Href == nil {
 			return nil, fmt.Errorf("import element in %s is missing 'href' attribute", r)
 		}
-		imf, err := os.Open(fmt.Sprintf(metaschemaDir, imported.Href.URL.String()))
+		imf, err := os.Open(fmt.Sprintf("%s/%s", metaschemaDir, imported.Href.URL.String()))
 		if err != nil {
 			return nil, err
 		}
