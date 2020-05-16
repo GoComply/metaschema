@@ -9,10 +9,11 @@ import (
 	"strings"
 	"text/template"
 
+	"github.com/gocomply/metaschema/metaschema/parser"
 	"github.com/iancoleman/strcase"
 )
 
-func GenerateTypes(metaschema *Metaschema) error {
+func GenerateTypes(metaschema *parser.Metaschema) error {
 	t, err := template.New("types.tmpl").Funcs(template.FuncMap{
 		"toCamel":    strcase.ToCamel,
 		"getImports": getImports,
@@ -45,7 +46,7 @@ func GenerateTypes(metaschema *Metaschema) error {
 	return nil
 }
 
-func getImports(metaschema Metaschema) string {
+func getImports(metaschema parser.Metaschema) string {
 	var imports strings.Builder
 	imports.WriteString("import (\n")
 	if metaschema.ContainsRootElement() {

@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"io"
 	"os"
+
+	"github.com/gocomply/metaschema/metaschema/parser"
 )
 
 func Generate(metaschemaDir string) error {
@@ -38,8 +40,8 @@ func Generate(metaschemaDir string) error {
 	return nil
 }
 
-func decode(metaschemaDir string, r io.Reader) (*Metaschema, error) {
-	var meta Metaschema
+func decode(metaschemaDir string, r io.Reader) (*parser.Metaschema, error) {
+	var meta parser.Metaschema
 
 	d := xml.NewDecoder(r)
 

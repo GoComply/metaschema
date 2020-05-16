@@ -1,4 +1,4 @@
-package metaschema
+package parser
 
 import (
 	"encoding/xml"
