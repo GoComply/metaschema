@@ -5,19 +5,19 @@ import (
 	"errors"
 	"fmt"
 	"go/format"
+	"io"
+	"io/ioutil"
 	"os"
 	"strings"
 	"text/template"
 
 	"github.com/gocomply/metaschema/metaschema/parser"
 	"github.com/iancoleman/strcase"
+	"github.com/markbates/pkger"
 )
 
 func GenerateTypes(metaschema *parser.Metaschema) error {
-	t, err := template.New("types.tmpl").Funcs(template.FuncMap{
-		"toCamel":    strcase.ToCamel,
-		"getImports": getImports,
-	}).ParseFiles("types.tmpl")
+	t, err := newTemplate()
 	if err != nil {
 		return err
 	}
@@ -60,4 +60,29 @@ func getImports(metaschema parser.Metaschema) string {
 	imports.WriteString(")")
 
 	return imports.String()
+}
+
+func newTemplate() (*template.Template, error) {
+	in, err := pkger.Open("/metaschema/template/types.tmpl")
+	if err != nil {
+		return nil, err
+	}
+	defer in.Close()
+
+	out, err := ioutil.TempFile("/tmp", "gocomply_metaschema.tmpl")
+	if err != nil {
+		return nil, err
+	}
+	defer out.Close()
+	defer os.Remove(out.Name())
+
+	_, err = io.Copy(out, in)
+	if err != nil {
+		return nil, err
+	}
+
+	return template.New("types.tmpl").Funcs(template.FuncMap{
+		"toCamel":    strcase.ToCamel,
+		"getImports": getImports,
+	}).ParseFiles(out.Name())
 }
