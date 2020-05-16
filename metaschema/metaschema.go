@@ -9,9 +9,6 @@ import (
 	"strings"
 )
 
-//go:generate go run generate.go
-
-// ...
 const (
 	AsTypeBoolean         AsType = "boolean"
 	AsTypeEmpty           AsType = "empty"
