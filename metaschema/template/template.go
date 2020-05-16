@@ -1,4 +1,4 @@
-package metaschema
+package template
 
 import (
 	"bytes"

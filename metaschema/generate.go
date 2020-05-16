@@ -7,6 +7,7 @@ import (
 	"os"
 
 	"github.com/gocomply/metaschema/metaschema/parser"
+	"github.com/gocomply/metaschema/metaschema/template"
 )
 
 func Generate(metaschemaDir string) error {
@@ -33,7 +34,7 @@ func Generate(metaschemaDir string) error {
 			return err
 		}
 
-		if err := GenerateTypes(meta); err != nil {
+		if err := template.GenerateTypes(meta); err != nil {
 			return err
 		}
 	}
