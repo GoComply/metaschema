@@ -16,3 +16,12 @@ information model developed using this framework can be used to automatically:
 This project extends metaschema beyond xml/json/yaml. This project allows users
 to generate golang code for processing those xml/json/yaml files out of NIST's
 metaschema.
+
+## Usage
+
+```
+# Acquire latest OSCAL metaschema (OSCAL is the most evolved appliacation of the metaschema)
+git clone --depth 1 https://github.com/usnistgov/OSCAL
+# Parse metaschema and generate golang structs
+./gocomply_metaschema generate ./OSCAL/src/metaschema ./output
+```
