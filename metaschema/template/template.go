@@ -5,7 +5,6 @@ import (
 	"errors"
 	"fmt"
 	"go/format"
-	"io"
 	"io/ioutil"
 	"os"
 	"path/filepath"
@@ -35,7 +34,7 @@ func GenerateTypes(metaschema *parser.Metaschema, outputDir string) error {
 	}
 
 	var buf bytes.Buffer
-	if err := t.ExecuteTemplate(&buf, "types.tmpl", metaschema); err != nil {
+	if err := t.Execute(&buf, metaschema); err != nil {
 		return err
 	}
 
@@ -75,14 +74,7 @@ func newTemplate() (*template.Template, error) {
 	}
 	defer in.Close()
 
-	out, err := ioutil.TempFile("/tmp", "gocomply_metaschema.tmpl")
-	if err != nil {
-		return nil, err
-	}
-	defer out.Close()
-	defer os.Remove(out.Name())
-
-	_, err = io.Copy(out, in)
+	tempText, err := ioutil.ReadAll(in)
 	if err != nil {
 		return nil, err
 	}
@@ -90,5 +82,5 @@ func newTemplate() (*template.Template, error) {
 	return template.New("types.tmpl").Funcs(template.FuncMap{
 		"toCamel":    strcase.ToCamel,
 		"getImports": getImports,
-	}).ParseFiles(out.Name())
+	}).Parse(string(tempText))
 }
