@@ -8,6 +8,7 @@ import (
 	"io"
 	"io/ioutil"
 	"os"
+	"path/filepath"
 	"strings"
 	"text/template"
 
@@ -23,7 +24,12 @@ func GenerateTypes(metaschema *parser.Metaschema, outputDir string) error {
 	}
 
 	packageName := metaschema.GoPackageName()
-	f, err := os.Create(fmt.Sprintf("%s/%s/%s.go", outputDir, packageName, packageName))
+	dir := filepath.Join(outputDir, packageName)
+	err = os.MkdirAll(dir, os.FileMode(0722))
+	if err != nil {
+		return err
+	}
+	f, err := os.Create(fmt.Sprintf("%s/%s.go", dir, packageName))
 	if err != nil {
 		return err
 	}
