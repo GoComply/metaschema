@@ -29,8 +29,8 @@ var generate = cli.Command{
 		return nil
 	},
 	Action: func(c *cli.Context) error {
-		metaschemaDir, _ := c.Args()[0], c.Args()[1]
-		err := metaschema.Generate(metaschemaDir)
+		metaschemaDir, outputDir := c.Args()[0], c.Args()[1]
+		err := metaschema.Generate(metaschemaDir, outputDir)
 		if err != nil {
 			return cli.NewExitError(err, 1)
 		}

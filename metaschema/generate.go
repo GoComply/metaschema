@@ -10,7 +10,7 @@ import (
 	"github.com/gocomply/metaschema/metaschema/template"
 )
 
-func Generate(metaschemaDir string) error {
+func Generate(metaschemaDir, outputDir string) error {
 
 	metaschemaPaths := map[string]string{
 		"validation_root": "oscal_metadata_metaschema.xml",
@@ -34,7 +34,7 @@ func Generate(metaschemaDir string) error {
 			return err
 		}
 
-		if err := template.GenerateTypes(meta); err != nil {
+		if err := template.GenerateTypes(meta, outputDir); err != nil {
 			return err
 		}
 	}

@@ -16,14 +16,14 @@ import (
 	"github.com/markbates/pkger"
 )
 
-func GenerateTypes(metaschema *parser.Metaschema) error {
+func GenerateTypes(metaschema *parser.Metaschema, outputDir string) error {
 	t, err := newTemplate()
 	if err != nil {
 		return err
 	}
 
 	packageName := metaschema.GoPackageName()
-	f, err := os.Create(fmt.Sprintf("../types/oscal/%s/%s.go", packageName, packageName))
+	f, err := os.Create(fmt.Sprintf("%s/%s/%s.go", outputDir, packageName, packageName))
 	if err != nil {
 		return err
 	}
