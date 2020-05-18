@@ -21,9 +21,6 @@ func Generate(metaschemaDir, outputDir string) error {
 		if !strings.HasSuffix(metaschemaPath.Name(), ".xml") {
 			continue
 		}
-		if strings.HasPrefix(metaschemaPath.Name(), "oscal_assessment") {
-			continue
-		}
 		fmt.Println("Processing ", metaschemaPath.Name())
 		f, err := os.Open(fmt.Sprintf("%s/%s", metaschemaDir, metaschemaPath.Name()))
 		if err != nil {
