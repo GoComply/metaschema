@@ -4,26 +4,28 @@ import (
 	"encoding/xml"
 	"fmt"
 	"io"
+	"io/ioutil"
 	"os"
+	"strings"
 
 	"github.com/gocomply/metaschema/metaschema/parser"
 	"github.com/gocomply/metaschema/metaschema/template"
 )
 
 func Generate(metaschemaDir, outputDir string) error {
-
-	metaschemaPaths := map[string]string{
-		"validation_root": "oscal_metadata_metaschema.xml",
-		"nominal_catalog": "oscal_control-common_metaschema.xml",
-		"catalog":         "oscal_catalog_metaschema.xml",
-		"profile":         "oscal_profile_metaschema.xml",
-		"implementation":  "oscal_implementation-common_metaschema.xml",
-		"ssp":             "oscal_ssp_metaschema.xml",
-		"component":       "oscal_component_metaschema.xml",
+	files, err := ioutil.ReadDir(metaschemaDir)
+	if err != nil {
+		return err
 	}
-
-	for _, metaschemaPath := range metaschemaPaths {
-		f, err := os.Open(fmt.Sprintf("%s/%s", metaschemaDir, metaschemaPath))
+	for _, metaschemaPath := range files {
+		if !strings.HasSuffix(metaschemaPath.Name(), ".xml") {
+			continue
+		}
+		if strings.HasPrefix(metaschemaPath.Name(), "oscal_assessment") {
+			continue
+		}
+		fmt.Println("Processing ", metaschemaPath.Name())
+		f, err := os.Open(fmt.Sprintf("%s/%s", metaschemaDir, metaschemaPath.Name()))
 		if err != nil {
 			return err
 		}
