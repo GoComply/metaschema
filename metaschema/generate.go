@@ -12,7 +12,7 @@ import (
 	"github.com/gocomply/metaschema/metaschema/template"
 )
 
-func Generate(metaschemaDir, outputDir string) error {
+func Generate(metaschemaDir, goModule, outputDir string) error {
 	files, err := ioutil.ReadDir(metaschemaDir)
 	if err != nil {
 		return err
@@ -28,7 +28,7 @@ func Generate(metaschemaDir, outputDir string) error {
 		}
 		defer f.Close()
 
-		meta, err := decode(metaschemaDir, f)
+		meta, err := decode(metaschemaDir, goModule, f)
 		if err != nil {
 			return err
 		}
@@ -40,7 +40,7 @@ func Generate(metaschemaDir, outputDir string) error {
 	return nil
 }
 
-func decode(metaschemaDir string, r io.Reader) (*parser.Metaschema, error) {
+func decode(metaschemaDir, goModule string, r io.Reader) (*parser.Metaschema, error) {
 	var meta parser.Metaschema
 
 	d := xml.NewDecoder(r)
@@ -59,7 +59,8 @@ func decode(metaschemaDir string, r io.Reader) (*parser.Metaschema, error) {
 		}
 		defer imf.Close()
 
-		importedMeta, err := decode(metaschemaDir, imf)
+		importedMeta, err := decode(metaschemaDir, goModule, imf)
+
 		if err != nil {
 			return nil, err
 		}
@@ -67,6 +68,7 @@ func decode(metaschemaDir string, r io.Reader) (*parser.Metaschema, error) {
 		meta.ImportedMetaschema = append(meta.ImportedMetaschema, *importedMeta)
 	}
 	err := meta.LinkDefinitions()
+	meta.GoMod = goModule
 
 	return &meta, err
 }

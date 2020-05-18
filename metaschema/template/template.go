@@ -59,7 +59,7 @@ func getImports(metaschema parser.Metaschema) string {
 	}
 
 	for _, im := range metaschema.ImportedDependencies() {
-		imports.WriteString(fmt.Sprintf("\n\t\"github.com/docker/oscalkit/types/oscal/%s\"\n", im.GoPackageName()))
+		imports.WriteString(fmt.Sprintf("\n\t\"%s/types/oscal/%s\"\n", metaschema.GoMod, im.GoPackageName()))
 	}
 
 	imports.WriteString(")")

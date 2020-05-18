@@ -70,6 +70,7 @@ type Metaschema struct {
 
 	ImportedMetaschema []Metaschema
 	Dependencies       map[string]GoType
+	GoMod              string
 }
 
 func (metaschema *Metaschema) ImportedDependencies() []*Metaschema {
