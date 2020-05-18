@@ -483,15 +483,18 @@ func (f *Flag) GoComment() string {
 func (f *Flag) GoDatatype() (string, error) {
 	dt := f.AsType
 	if dt == "" {
-		if f.Ref == "" && (f.Name == "position" || f.Name == "asset-id" || f.Name == "use" || f.Name == "system") {
+		if f.Ref == "" {
 			// workaround bug: inline definition without type hint https://github.com/usnistgov/OSCAL/pull/570
 			return "string", nil
 		}
 		dt = f.Def.AsType
 	}
 
+	if dt == "" {
+		return "string", nil
+	}
 	if goDatatypeMap[dt] == "" {
-		return "", fmt.Errorf("Unknown as-type='%s' found.", dt)
+		return "", fmt.Errorf("Unknown as-type='%s' found at <%s> definition", dt, f.Ref)
 	}
 	return goDatatypeMap[dt], nil
 }
