@@ -4,7 +4,7 @@ GOBUILD=$(GO) build
 all: build
 
 build:
-	$(GOBUILD) ./cli/gocomply_metaschema.go
+	$(GOBUILD) ./cli/gocomply_metaschema
 
 .PHONY: pkger
 pkger:
