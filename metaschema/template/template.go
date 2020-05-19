@@ -17,7 +17,7 @@ import (
 )
 
 func GenerateTypes(metaschema *parser.Metaschema, outputDir string) error {
-	t, err := newTemplate()
+	t, err := newTemplate(outputDir)
 	if err != nil {
 		return err
 	}
@@ -51,23 +51,23 @@ func GenerateTypes(metaschema *parser.Metaschema, outputDir string) error {
 	return nil
 }
 
-func getImports(metaschema parser.Metaschema) string {
-	var imports strings.Builder
-	imports.WriteString("import (\n")
-	if metaschema.ContainsRootElement() {
-		imports.WriteString("\t\"encoding/xml\"\n")
+func newTemplate(outputDir string) (*template.Template, error) {
+	getImports := func(metaschema parser.Metaschema) string {
+		var imports strings.Builder
+		imports.WriteString("import (\n")
+		if metaschema.ContainsRootElement() {
+			imports.WriteString("\t\"encoding/xml\"\n")
+		}
+
+		for _, im := range metaschema.ImportedDependencies() {
+			imports.WriteString(fmt.Sprintf("\n\t\"%s/%s/%s\"\n", metaschema.GoMod, outputDir, im.GoPackageName()))
+		}
+
+		imports.WriteString(")")
+
+		return imports.String()
 	}
 
-	for _, im := range metaschema.ImportedDependencies() {
-		imports.WriteString(fmt.Sprintf("\n\t\"%s/types/oscal/%s\"\n", metaschema.GoMod, im.GoPackageName()))
-	}
-
-	imports.WriteString(")")
-
-	return imports.String()
-}
-
-func newTemplate() (*template.Template, error) {
 	in, err := pkger.Open("/metaschema/template/types.tmpl")
 	if err != nil {
 		return nil, err
