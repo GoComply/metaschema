@@ -1,4 +1,4 @@
-# Metaschema modeling language
+# Metaschema modeling language ![Build](https://github.com/GoComply/metaschema/workflows/Metaschema%20Build%20CI/badge.svg)
 
 ## Introduction
 
