@@ -64,6 +64,6 @@ nfpms:
     bindir: /usr/bin
 
     homepage: github.com/GoComply/metaschema
-    license: CC0
-    description: A client/server implementation of ROLIE written in GO
+    license: The Unlicense
+    description: Golang implementation of NIST's metaschema modeling language
     release: 1
