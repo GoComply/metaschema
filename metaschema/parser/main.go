@@ -658,6 +658,7 @@ const (
 	datatypeAnyURI             datatype = "anyURI"
 	datatypeURIRef             datatype = "uri-reference"
 	datatypeURI                datatype = "uri"
+	datatypeUUID               datatype = "uuid"
 	datatypeNonNegativeInteger datatype = "nonNegativeInteger"
 )
 
@@ -669,6 +670,7 @@ var goDatatypeMap = map[datatype]string{
 	datatypeID:                 "string",
 	datatypeURIRef:             "string",
 	datatypeURI:                "string",
+	datatypeUUID:               "string",
 	datatypeNonNegativeInteger: "uint64",
 }
 
