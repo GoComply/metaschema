@@ -1,0 +1,38 @@
+name: Process NIST OSCAL
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        os: [macos-latest, windows-latest, ubuntu-latest]
+        go-version: [1.13.x, 1.14.x]
+
+    runs-on: ${{ matrix.os }}
+    steps:
+
+    - name: Set up Go ${{ matrix.go-version }}
+      uses: actions/setup-go@v1
+      with:
+        go-version: ${{ matrix.go-version }}
+      id: go
+
+    - name: Check out code into the Go module directory
+      uses: actions/checkout@v2
+
+    - name: Get Go dependencies
+      run: go get -v -t -d ./...
+
+    - name: Build metaschema
+      run: go build -v ./cli/gocomply_metaschema
+
+    - name: Acquire NIST OSCAL
+      run: git clone --depth 1 https://github.com/usnistgov/OSCAL
+
+    - name: generate go code for NIST OSCAL
+      run: ./gocomply_metaschema generate ./OSCAL/src/metaschema github.com/docker/oscalkit types/oscal
