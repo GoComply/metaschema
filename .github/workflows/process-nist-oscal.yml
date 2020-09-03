@@ -35,4 +35,4 @@ jobs:
       run: git clone --depth 1 https://github.com/usnistgov/OSCAL
 
     - name: generate go code for NIST OSCAL
-      run: ./gocomply_metaschema generate ./OSCAL/src/metaschema github.com/docker/oscalkit types/oscal
+      run: ./gocomply_metaschema generate ./OSCAL/src/metaschema github.com/gocomply/oscalkit types/oscal

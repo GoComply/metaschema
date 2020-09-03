@@ -23,7 +23,7 @@ metaschema.
 # Acquire latest OSCAL metaschema (OSCAL is the most evolved appliacation of the metaschema)
 git clone --depth 1 https://github.com/usnistgov/OSCAL
 # Parse metaschema and generate golang structs
-./gocomply_metaschema generate ./OSCAL/src/metaschema github.com/docker/oscalkit types/oscal
+./gocomply_metaschema generate ./OSCAL/src/metaschema github.com/gocomply/oscalkit types/oscal
 ```
 
 ## Installation
