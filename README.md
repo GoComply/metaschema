@@ -31,3 +31,7 @@ git clone --depth 1 https://github.com/usnistgov/OSCAL
 ```
 go get -u -v github.com/gocomply/metaschema/cli/gocomply_metaschema
 ```
+
+## Projects using GoComply/metaschema
+
+ * [GoComply/oscalkit](https://github.com/GoComply/oscalkit/tree/master/types/oscal) - OSCAL implementation, oscalkit uses CI to re-generate models periodically from [usnistgov/OSCAL](https://github.com/usnistgov/OSCAL)
