@@ -367,6 +367,10 @@ func (a *Assembly) GoMemLayout() string {
 	return "*"
 }
 
+func (a *Assembly) GoName() string {
+	return strcase.ToCamel(a.JsonName())
+}
+
 func (a *Assembly) JsonName() string {
 	if a.GroupAs != nil {
 		return a.GroupAs.Name
@@ -433,6 +437,10 @@ func (f *Field) GoMemLayout() string {
 	return ""
 }
 
+func (f *Field) GoName() string {
+	return strcase.ToCamel(f.JsonName())
+}
+
 func (f *Field) JsonName() string {
 	if f.GroupAs != nil {
 		return f.GroupAs.Name
@@ -488,6 +496,10 @@ func (f *Flag) GoTypeName() string {
 		return strcase.ToCamel(f.Name)
 	}
 	return f.Def.GoTypeName()
+}
+
+func (f *Flag) GoName() string {
+	return strcase.ToCamel(f.JsonName())
 }
 
 func (f *Flag) JsonName() string {

@@ -7,7 +7,7 @@ package {{ $packageName }}
 {{$m := . -}}
 {{range .DefineAssembly}}
   // {{ .GoComment }}
-type {{toCamel .Name}} struct {
+type {{.GoTypeName}} struct {
   {{if .RepresentsRootElement }}
   XMLName xml.Name `xml:"http://csrc.nist.gov/ns/oscal/1.0 {{ .Name }}" json:"-"`
   {{- end}}
@@ -16,29 +16,29 @@ type {{toCamel .Name}} struct {
   {{- if and (eq "id" .Name) (eq "profile" $packageName)}}
   Id string `xml:"param-id,attr,omitempty" json:"id,omitempty"`
   {{- else}}
-  {{toCamel .JsonName}} {{.GoDatatype}} `xml:"{{.XmlName}},attr,omitempty" json:"{{.JsonName}},omitempty"`
+  {{.GoName}} {{.GoDatatype}} `xml:"{{.XmlName}},attr,omitempty" json:"{{.JsonName}},omitempty"`
   {{- end}}
 {{- end}}
   {{if .Model}}
     {{ range .Model.Field}}
       // {{ .GoComment }}
-      {{ toCamel .JsonName}} {{.GoMemLayout}}{{.GoTypeName}} `xml:"{{ .XmlName }},omitempty" json:"{{.JsonName}},omitempty"`
+      {{.GoName}} {{.GoMemLayout}}{{.GoTypeName}} `xml:"{{ .XmlName }},omitempty" json:"{{.JsonName}},omitempty"`
     {{- end}}
 
     {{- range .Model.Assembly}}
       // {{ .GoComment }}
-      {{ toCamel .JsonName}} {{.GoMemLayout}}{{.GoTypeName}} `xml:"{{.XmlName}},omitempty" json:"{{.JsonName}},omitempty"`
+      {{.GoName}} {{.GoMemLayout}}{{.GoTypeName}} `xml:"{{.XmlName}},omitempty" json:"{{.JsonName}},omitempty"`
     {{- end}}
 
   {{- range .Model.Choice}}
   {{- range .Field}}
   // {{ .GoComment }}
-  {{ toCamel .JsonName}} {{.GoMemLayout}}{{.GoTypeName}} `xml:"{{.XmlName}},omitempty" json:"{{.JsonName}},omitempty"`
+  {{.GoName}} {{.GoMemLayout}}{{.GoTypeName}} `xml:"{{.XmlName}},omitempty" json:"{{.JsonName}},omitempty"`
   {{- end}}
 
   {{- range .Assembly}}
   // {{ .GoComment }}
-  {{ toCamel .JsonName}} {{.GoMemLayout}}{{.GoTypeName}} `xml:"{{.XmlName}},omitempty" json:"{{.JsonName}},omitempty"`
+  {{.GoName}} {{.GoMemLayout}}{{.GoTypeName}} `xml:"{{.XmlName}},omitempty" json:"{{.JsonName}},omitempty"`
   {{- end}}
 
   {{- end}}
@@ -51,10 +51,10 @@ type {{toCamel .Name}} struct {
   // {{ .GoComment }}
 {{$l := len .Flags -}}
 {{- if gt $l 0 -}}
-type {{toCamel .Name}} struct {
+type {{.GoTypeName}} struct {
   {{- range .Flags}}
   // {{ .GoComment }}
-  {{toCamel .JsonName}} {{.GoDatatype}} `xml:"{{.XmlName}},attr,omitempty" json:"{{.JsonName}},omitempty"`
+  {{.GoName}} {{.GoDatatype}} `xml:"{{.XmlName}},attr,omitempty" json:"{{.JsonName}},omitempty"`
   {{end -}}
 
   Value string `xml:",chardata" json:"value,omitempty"`

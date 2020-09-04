@@ -12,7 +12,6 @@ import (
 	"text/template"
 
 	"github.com/gocomply/metaschema/metaschema/parser"
-	"github.com/iancoleman/strcase"
 	"github.com/markbates/pkger"
 )
 
@@ -80,7 +79,6 @@ func newTemplate(outputDir string) (*template.Template, error) {
 	}
 
 	return template.New("types.tmpl").Funcs(template.FuncMap{
-		"toCamel":    strcase.ToCamel,
 		"getImports": getImports,
 	}).Parse(string(tempText))
 }
