@@ -341,8 +341,6 @@ type Model struct {
 }
 
 type Assembly struct {
-	Named string `xml:"named,attr"`
-
 	Description string   `xml:"description"`
 	Remarks     *Remarks `xml:"remarks"`
 	Ref         string   `xml:"ref,attr"`
@@ -359,9 +357,6 @@ func (a *Assembly) GoComment() string {
 }
 
 func (a *Assembly) GoName() string {
-	if a.Named != "" {
-		return strcase.ToCamel(a.Named)
-	}
 	return a.Def.GoName()
 }
 
@@ -380,11 +375,7 @@ func (a *Assembly) JsonName() string {
 }
 
 func (a *Assembly) XmlName() string {
-	if a.Named != "" {
-		return a.Named
-	} else {
-		return a.Def.Name
-	}
+	return a.Def.Name
 }
 
 func (a *Assembly) GoPackageName() string {
