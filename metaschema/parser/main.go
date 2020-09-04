@@ -389,7 +389,6 @@ func (a *Assembly) GoPackageName() string {
 }
 
 type Field struct {
-	Named    string `xml:"named,attr"`
 	Required string `xml:"required,attr"`
 
 	Description string   `xml:"description"`
@@ -412,9 +411,6 @@ func (f *Field) RequiresPointer() bool {
 }
 
 func (f *Field) GoName() string {
-	if f.Named != "" {
-		return strcase.ToCamel(f.Named)
-	}
 	return f.Def.GoName()
 }
 
@@ -445,11 +441,7 @@ func (f *Field) JsonName() string {
 }
 
 func (f *Field) XmlName() string {
-	if f.Named != "" {
-		return f.Named
-	} else {
-		return f.Def.Name
-	}
+	return f.Def.Name
 }
 
 type Flag struct {
