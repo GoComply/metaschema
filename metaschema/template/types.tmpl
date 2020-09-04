@@ -22,23 +22,23 @@ type {{toCamel .Name}} struct {
   {{if .Model}}
     {{ range .Model.Field}}
       // {{ .GoComment }}
-      {{ toCamel .JsonName}} {{.GoMemLayout}}{{.GoName}} `xml:"{{ .XmlName }},omitempty" json:"{{.JsonName}},omitempty"`
+      {{ toCamel .JsonName}} {{.GoMemLayout}}{{.GoTypeName}} `xml:"{{ .XmlName }},omitempty" json:"{{.JsonName}},omitempty"`
     {{- end}}
 
     {{- range .Model.Assembly}}
       // {{ .GoComment }}
-      {{ toCamel .JsonName}} {{.GoMemLayout}}{{.GoName}} `xml:"{{.XmlName}},omitempty" json:"{{.JsonName}},omitempty"`
+      {{ toCamel .JsonName}} {{.GoMemLayout}}{{.GoTypeName}} `xml:"{{.XmlName}},omitempty" json:"{{.JsonName}},omitempty"`
     {{- end}}
 
   {{- range .Model.Choice}}
   {{- range .Field}}
   // {{ .GoComment }}
-  {{ toCamel .JsonName}} {{.GoMemLayout}}{{.GoName}} `xml:"{{.XmlName}},omitempty" json:"{{.JsonName}},omitempty"`
+  {{ toCamel .JsonName}} {{.GoMemLayout}}{{.GoTypeName}} `xml:"{{.XmlName}},omitempty" json:"{{.JsonName}},omitempty"`
   {{- end}}
 
   {{- range .Assembly}}
   // {{ .GoComment }}
-  {{ toCamel .JsonName}} {{.GoMemLayout}}{{.GoName}} `xml:"{{.XmlName}},omitempty" json:"{{.JsonName}},omitempty"`
+  {{ toCamel .JsonName}} {{.GoMemLayout}}{{.GoTypeName}} `xml:"{{.XmlName}},omitempty" json:"{{.JsonName}},omitempty"`
   {{- end}}
 
   {{- end}}
@@ -61,13 +61,13 @@ type {{toCamel .Name}} struct {
 }
 {{- else}}
   {{- if .IsMarkup }}
-  type {{ .GoName }} = Markup
+  type {{ .GoTypeName }} = Markup
   {{- else }}
-  type {{ .GoName }} string
+  type {{ .GoTypeName }} string
   {{- end}}
 {{end -}}
 {{end}}
 
 {{ range .Dependencies }}
-type {{.GoName}} = {{ .GetMetaschema.GoPackageName }}.{{.GoName}}
+type {{.GoTypeName}} = {{ .GetMetaschema.GoPackageName }}.{{.GoTypeName}}
 {{end }}

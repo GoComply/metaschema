@@ -35,7 +35,7 @@ var ShowDocsOptions = []ShowDocs{
 }
 
 type GoType interface {
-	GoName() string
+	GoTypeName() string
 	GetMetaschema() *Metaschema
 }
 
@@ -262,7 +262,7 @@ type DefineAssembly struct {
 	Metaschema  *Metaschema
 }
 
-func (da *DefineAssembly) GoName() string {
+func (da *DefineAssembly) GoTypeName() string {
 	return strcase.ToCamel(da.Name)
 }
 
@@ -292,7 +292,7 @@ type DefineField struct {
 	Metaschema  *Metaschema
 }
 
-func (df *DefineField) GoName() string {
+func (df *DefineField) GoTypeName() string {
 	return strcase.ToCamel(df.Name)
 }
 
@@ -324,7 +324,7 @@ type DefineFlag struct {
 	Metaschema  *Metaschema
 }
 
-func (df *DefineFlag) GoName() string {
+func (df *DefineFlag) GoTypeName() string {
 	return strcase.ToCamel(df.Name)
 }
 
@@ -356,8 +356,8 @@ func (a *Assembly) GoComment() string {
 	return a.Def.GoComment()
 }
 
-func (a *Assembly) GoName() string {
-	return a.Def.GoName()
+func (a *Assembly) GoTypeName() string {
+	return a.Def.GoTypeName()
 }
 
 func (a *Assembly) GoMemLayout() string {
@@ -410,8 +410,8 @@ func (f *Field) RequiresPointer() bool {
 	return f.Def.RequiresPointer()
 }
 
-func (f *Field) GoName() string {
-	return f.Def.GoName()
+func (f *Field) GoTypeName() string {
+	return f.Def.GoTypeName()
 }
 
 func (f *Field) GoPackageName() string {
@@ -483,11 +483,11 @@ func (f *Flag) GoDatatype() (string, error) {
 	return goDatatypeMap[dt], nil
 }
 
-func (f *Flag) GoName() string {
+func (f *Flag) GoTypeName() string {
 	if f.Name != "" {
 		return strcase.ToCamel(f.Name)
 	}
-	return f.Def.GoName()
+	return f.Def.GoTypeName()
 }
 
 func (f *Flag) JsonName() string {
