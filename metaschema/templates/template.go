@@ -70,7 +70,7 @@ func newTemplate(baseDir, templateName string) (*template.Template, error) {
 		return imports.String()
 	}
 
-	in, err := pkger.Open("/metaschema/templates/generated_models.tmpl")
+	in, err := pkger.Open("/metaschema/templates/" + templateName + ".tmpl")
 	if err != nil {
 		return nil, err
 	}
@@ -90,4 +90,9 @@ func ensurePkgDir(metaschema *parser.Metaschema, baseDir string) (string, error)
 	dir := filepath.Join(baseDir, metaschema.GoPackageName())
 	err := os.MkdirAll(dir, os.FileMode(0722))
 	return dir, err
+}
+
+func noop() {
+	// Hint pkger tool to bundle these files
+	pkger.Include("/metaschema/templates/generated_models.tmpl")
 }
