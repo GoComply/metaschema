@@ -45,11 +45,7 @@ func GenerateModels(metaschema *parser.Metaschema, baseDir, pkgDir string) error
 	}
 
 	_, err = f.Write(p)
-	if err != nil {
-		return err
-	}
-
-	return nil
+	return err
 }
 
 func newTemplate(baseDir string) (*template.Template, error) {
