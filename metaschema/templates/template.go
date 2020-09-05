@@ -20,7 +20,7 @@ func GenerateAll(metaschema *parser.Metaschema, baseDir string) error {
 	if err != nil {
 		return err
 	}
-	for _, templateName := range []string{"generated_models"} {
+	for _, templateName := range []string{"generated_models", "generated_multiplexers"} {
 		t, err := newTemplate(baseDir, templateName)
 		if err != nil {
 			return err
@@ -95,4 +95,5 @@ func ensurePkgDir(metaschema *parser.Metaschema, baseDir string) (string, error)
 func noop() {
 	// Hint pkger tool to bundle these files
 	pkger.Include("/metaschema/templates/generated_models.tmpl")
+	pkger.Include("/metaschema/templates/generated_multiplexers.tmpl")
 }
