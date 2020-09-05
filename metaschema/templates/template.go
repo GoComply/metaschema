@@ -20,16 +20,21 @@ func GenerateAll(metaschema *parser.Metaschema, baseDir string) error {
 	if err != nil {
 		return err
 	}
-	return GenerateModels(metaschema, baseDir, pkgDir)
+	for _, templateName := range []string{"generated_models"} {
+		t, err := newTemplate(baseDir, templateName)
+		if err != nil {
+			return err
+		}
+		err = executeTemplate(t, metaschema, fmt.Sprintf("%s/%s.go", pkgDir, templateName))
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
-func GenerateModels(metaschema *parser.Metaschema, baseDir, pkgDir string) error {
-	t, err := newTemplate(baseDir)
-	if err != nil {
-		return err
-	}
-
-	f, err := os.Create(fmt.Sprintf("%s/generated_models.go", pkgDir))
+func executeTemplate(t *template.Template, metaschema *parser.Metaschema, filename string) error {
+	f, err := os.Create(filename)
 	if err != nil {
 		return err
 	}
@@ -48,7 +53,7 @@ func GenerateModels(metaschema *parser.Metaschema, baseDir, pkgDir string) error
 	return err
 }
 
-func newTemplate(baseDir string) (*template.Template, error) {
+func newTemplate(baseDir, templateName string) (*template.Template, error) {
 	getImports := func(metaschema parser.Metaschema) string {
 		var imports strings.Builder
 		imports.WriteString("import (\n")
@@ -76,7 +81,7 @@ func newTemplate(baseDir string) (*template.Template, error) {
 		return nil, err
 	}
 
-	return template.New("generated_models.tmpl").Funcs(template.FuncMap{
+	return template.New(templateName + ".tmpl").Funcs(template.FuncMap{
 		"getImports": getImports,
 	}).Parse(string(tempText))
 }
