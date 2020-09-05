@@ -249,7 +249,6 @@ func (Metaschema *Metaschema) ContainsRootElement() bool {
 // structured content
 type DefineAssembly struct {
 	Name     string `xml:"name,attr"`
-	GroupAs  string `xml:"group-as,attr"`
 	ShowDocs string `xml:"show-docs,attr"`
 	Address  string `xml:"address,attr"`
 
