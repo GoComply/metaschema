@@ -15,18 +15,18 @@ import (
 	"github.com/markbates/pkger"
 )
 
-func GenerateAll(metaschema *parser.Metaschema, outputDir string) error {
-	return GenerateModels(metaschema, outputDir)
+func GenerateAll(metaschema *parser.Metaschema, baseDir string) error {
+	return GenerateModels(metaschema, baseDir)
 }
 
-func GenerateModels(metaschema *parser.Metaschema, outputDir string) error {
-	t, err := newTemplate(outputDir)
+func GenerateModels(metaschema *parser.Metaschema, baseDir string) error {
+	t, err := newTemplate(baseDir)
 	if err != nil {
 		return err
 	}
 
 	packageName := metaschema.GoPackageName()
-	dir := filepath.Join(outputDir, packageName)
+	dir := filepath.Join(baseDir, packageName)
 	err = os.MkdirAll(dir, os.FileMode(0722))
 	if err != nil {
 		return err
@@ -54,7 +54,7 @@ func GenerateModels(metaschema *parser.Metaschema, outputDir string) error {
 	return nil
 }
 
-func newTemplate(outputDir string) (*template.Template, error) {
+func newTemplate(baseDir string) (*template.Template, error) {
 	getImports := func(metaschema parser.Metaschema) string {
 		var imports strings.Builder
 		imports.WriteString("import (\n")
@@ -63,7 +63,7 @@ func newTemplate(outputDir string) (*template.Template, error) {
 		}
 
 		for _, im := range metaschema.ImportedDependencies() {
-			imports.WriteString(fmt.Sprintf("\n\t\"%s/%s/%s\"\n", metaschema.GoMod, outputDir, im.GoPackageName()))
+			imports.WriteString(fmt.Sprintf("\n\t\"%s/%s/%s\"\n", metaschema.GoMod, baseDir, im.GoPackageName()))
 		}
 
 		imports.WriteString(")")
