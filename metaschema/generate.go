@@ -9,7 +9,7 @@ import (
 	"strings"
 
 	"github.com/gocomply/metaschema/metaschema/parser"
-	"github.com/gocomply/metaschema/metaschema/template"
+	"github.com/gocomply/metaschema/metaschema/templates"
 )
 
 func Generate(metaschemaDir, goModule, outputDir string) error {
@@ -33,7 +33,7 @@ func Generate(metaschemaDir, goModule, outputDir string) error {
 			return err
 		}
 
-		if err := template.GenerateAll(meta, outputDir); err != nil {
+		if err := templates.GenerateAll(meta, outputDir); err != nil {
 			return err
 		}
 	}

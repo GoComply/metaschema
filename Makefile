@@ -13,7 +13,7 @@ ifeq ("$(wildcard $(GOPATH)/bin/pkger)","")
 endif
 
 ci-update-bundled-deps: pkger
-	pkger -o metaschema/template
+	pkger -o metaschema/templates
 
 vendor:
 	$(GO) mod tidy

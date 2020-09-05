@@ -1,4 +1,4 @@
-package template
+package templates
 
 import (
 	"bytes"
@@ -71,7 +71,7 @@ func newTemplate(outputDir string) (*template.Template, error) {
 		return imports.String()
 	}
 
-	in, err := pkger.Open("/metaschema/template/generated_models.tmpl")
+	in, err := pkger.Open("/metaschema/templates/generated_models.tmpl")
 	if err != nil {
 		return nil, err
 	}
