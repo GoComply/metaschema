@@ -16,22 +16,20 @@ import (
 )
 
 func GenerateAll(metaschema *parser.Metaschema, baseDir string) error {
-	return GenerateModels(metaschema, baseDir)
+	pkgDir, err := ensurePkgDir(metaschema, baseDir)
+	if err != nil {
+		return err
+	}
+	return GenerateModels(metaschema, baseDir, pkgDir)
 }
 
-func GenerateModels(metaschema *parser.Metaschema, baseDir string) error {
+func GenerateModels(metaschema *parser.Metaschema, baseDir, pkgDir string) error {
 	t, err := newTemplate(baseDir)
 	if err != nil {
 		return err
 	}
 
-	packageName := metaschema.GoPackageName()
-	dir := filepath.Join(baseDir, packageName)
-	err = os.MkdirAll(dir, os.FileMode(0722))
-	if err != nil {
-		return err
-	}
-	f, err := os.Create(fmt.Sprintf("%s/generated_models.go", dir))
+	f, err := os.Create(fmt.Sprintf("%s/generated_models.go", pkgDir))
 	if err != nil {
 		return err
 	}
@@ -85,4 +83,10 @@ func newTemplate(baseDir string) (*template.Template, error) {
 	return template.New("generated_models.tmpl").Funcs(template.FuncMap{
 		"getImports": getImports,
 	}).Parse(string(tempText))
+}
+
+func ensurePkgDir(metaschema *parser.Metaschema, baseDir string) (string, error) {
+	dir := filepath.Join(baseDir, metaschema.GoPackageName())
+	err := os.MkdirAll(dir, os.FileMode(0722))
+	return dir, err
 }
