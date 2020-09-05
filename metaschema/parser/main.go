@@ -358,6 +358,10 @@ func (a *Assembly) GoTypeName() string {
 	return a.Def.GoTypeName()
 }
 
+func (a *Assembly) requiresMultiplexer() bool {
+	return a.GroupAs != nil && a.GroupAs.InJson == "BY_KEY"
+}
+
 func (a *Assembly) GoMemLayout() string {
 	if a.GroupAs != nil {
 		return "[]"
@@ -388,6 +392,10 @@ func (a *Assembly) GoPackageName() string {
 	} else {
 		return a.Def.Metaschema.GoPackageName() + "."
 	}
+}
+
+func (a *Assembly) groupAs() *GroupAs {
+	return a.GroupAs
 }
 
 type Field struct {
@@ -516,7 +524,8 @@ type Choice struct {
 }
 
 type GroupAs struct {
-	Name string `xml:"name,attr"`
+	Name   string `xml:"name,attr"`
+	InJson string `xml:"in-json,attr"`
 }
 
 type Import struct {
