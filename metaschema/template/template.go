@@ -67,7 +67,7 @@ func newTemplate(outputDir string) (*template.Template, error) {
 		return imports.String()
 	}
 
-	in, err := pkger.Open("/metaschema/template/types.tmpl")
+	in, err := pkger.Open("/metaschema/template/generated_models.tmpl")
 	if err != nil {
 		return nil, err
 	}
@@ -78,7 +78,7 @@ func newTemplate(outputDir string) (*template.Template, error) {
 		return nil, err
 	}
 
-	return template.New("types.tmpl").Funcs(template.FuncMap{
+	return template.New("generated_models.tmpl").Funcs(template.FuncMap{
 		"getImports": getImports,
 	}).Parse(string(tempText))
 }
