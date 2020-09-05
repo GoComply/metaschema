@@ -16,10 +16,10 @@ import (
 )
 
 func GenerateAll(metaschema *parser.Metaschema, outputDir string) error {
-	return GenerateTypes(metaschema, outputDir)
+	return GenerateModels(metaschema, outputDir)
 }
 
-func GenerateTypes(metaschema *parser.Metaschema, outputDir string) error {
+func GenerateModels(metaschema *parser.Metaschema, outputDir string) error {
 	t, err := newTemplate(outputDir)
 	if err != nil {
 		return err
