@@ -280,7 +280,6 @@ func (a *DefineAssembly) GetMetaschema() *Metaschema {
 
 type DefineField struct {
 	Name     string `xml:"name,attr"`
-	GroupAs  string `xml:"group-as,attr"`
 	ShowDocs string `xml:"show-docs,attr"`
 
 	Flags       []Flag    `xml:"flag"`
