@@ -15,6 +15,10 @@ import (
 	"github.com/markbates/pkger"
 )
 
+func GenerateAll(metaschema *parser.Metaschema, outputDir string) error {
+	return GenerateTypes(metaschema, outputDir)
+}
+
 func GenerateTypes(metaschema *parser.Metaschema, outputDir string) error {
 	t, err := newTemplate(outputDir)
 	if err != nil {

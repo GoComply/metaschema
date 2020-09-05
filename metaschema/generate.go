@@ -33,7 +33,7 @@ func Generate(metaschemaDir, goModule, outputDir string) error {
 			return err
 		}
 
-		if err := template.GenerateTypes(meta, outputDir); err != nil {
+		if err := template.GenerateAll(meta, outputDir); err != nil {
 			return err
 		}
 	}
