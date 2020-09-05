@@ -294,7 +294,7 @@ func (df *DefineField) GoTypeName() string {
 	return strcase.ToCamel(df.Name)
 }
 
-func (df *DefineField) RequiresPointer() bool {
+func (df *DefineField) requiresPointer() bool {
 	return len(df.Flags) > 0 || df.IsMarkup()
 }
 
@@ -408,8 +408,8 @@ func (f *Field) GoComment() string {
 	return f.Def.GoComment()
 }
 
-func (f *Field) RequiresPointer() bool {
-	return f.Def.RequiresPointer()
+func (f *Field) requiresPointer() bool {
+	return f.Def.requiresPointer()
 }
 
 func (f *Field) GoTypeName() string {
@@ -429,7 +429,7 @@ func (f *Field) GoPackageName() string {
 func (f *Field) GoMemLayout() string {
 	if f.GroupAs != nil {
 		return "[]"
-	} else if f.RequiresPointer() {
+	} else if f.requiresPointer() {
 		return "*"
 	}
 	return ""
