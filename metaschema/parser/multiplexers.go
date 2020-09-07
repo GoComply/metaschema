@@ -43,7 +43,7 @@ func (metaschema *Metaschema) calculateMultiplexers() []Multiplexer {
 	uniq := map[string]Multiplexer{}
 	for _, da := range metaschema.DefineAssembly {
 		for i, a := range da.Model.Assembly {
-			if requiresMultiplexer(a) {
+			if requiresMultiplexer(&a) {
 				mplex := Multiplexer{
 					MultiplexedModel: &da.Model.Assembly[i],
 					Metaschema:       metaschema,
@@ -72,5 +72,5 @@ type MultiplexedModel interface {
 }
 
 func requiresMultiplexer(mm MultiplexedModel) bool {
-	return mm.groupAs() != nil && mm.GroupAs.IntJson == "BY_KEY"
+	return mm.groupAs() != nil && mm.groupAs().InJson == "BY_KEY"
 }
