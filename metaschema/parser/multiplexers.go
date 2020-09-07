@@ -10,10 +10,15 @@ import (
 type Multiplexer struct {
 	Name             string
 	MultiplexedModel MultiplexedModel
+	Metaschema       *Metaschema
 }
 
 func (mplex *Multiplexer) GoTypeName() string {
 	return mplex.GoTypeNameOriginal() + "Multiplexer"
+}
+
+func (mplex *Multiplexer) GetMetaschema() *Metaschema {
+	return mplex.Metaschema
 }
 
 func (mplex *Multiplexer) GoTypeNameOriginal() string {
@@ -40,8 +45,14 @@ func (metaschema *Metaschema) calculateMultiplexers() []Multiplexer {
 	for _, da := range metaschema.DefineAssembly {
 		for i, a := range da.Model.Assembly {
 			if a.requiresMultiplexer() {
-				mplex := Multiplexer{MultiplexedModel: &da.Model.Assembly[i]}
-				if metaschema.getMultiplexer(mplex.GoTypeName()) == nil {
+				mplex := Multiplexer{
+					MultiplexedModel: &da.Model.Assembly[i],
+					Metaschema:       metaschema,
+				}
+				existing := metaschema.getMultiplexer(mplex.GoTypeName())
+				if existing != nil {
+					metaschema.registerDependency(mplex.GoTypeName(), existing)
+				} else {
 					uniq[mplex.GoTypeName()] = mplex
 				}
 			}
@@ -54,13 +65,6 @@ func (metaschema *Metaschema) calculateMultiplexers() []Multiplexer {
 	}
 	sort.Slice(result, func(i, j int) bool { return result[i].GoTypeName() < result[j].GoTypeName() })
 	return result
-}
-
-func newMultiplexer(multiplexedModel MultiplexedModel) Multiplexer {
-	return Multiplexer{
-		MultiplexedModel: multiplexedModel,
-	}
-
 }
 
 type MultiplexedModel interface {
