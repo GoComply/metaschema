@@ -68,7 +68,6 @@ func (metaschema *Metaschema) calculateMultiplexers() []Multiplexer {
 }
 
 type MultiplexedModel interface {
-	GoName() string
 	GoTypeName() string
 	groupAs() *GroupAs
 }
