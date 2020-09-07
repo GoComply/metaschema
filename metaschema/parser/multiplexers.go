@@ -1,6 +1,8 @@
 package parser
 
-import ()
+import (
+	"sort"
+)
 
 // Multiplexer represents model to be generated in go code that does not exists in the metaschema.
 // Such model is only needed for serialization&deserialization as json and xml schemas differ
@@ -34,7 +36,7 @@ func (metaschema *Metaschema) Multiplexers() []Multiplexer {
 			MultiplexedModel: v,
 		})
 	}
-
+	sort.Slice(result, func(i, j int) bool { return result[i].GoTypeName() < result[j].GoTypeName() })
 	return result
 }
 
