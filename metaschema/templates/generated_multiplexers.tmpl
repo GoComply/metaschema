@@ -6,5 +6,5 @@
 package {{ $packageName }}
 
 {{range .Multiplexers}}
-  type {{.GoTypeName}} = []{{.GoTypeNameOriginal}}
+  type {{.GoTypeName}} []{{.GoTypeNameOriginal}}
 {{- end}}
