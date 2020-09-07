@@ -27,7 +27,7 @@ type {{.GoTypeName}} struct {
 
     {{- range .Model.Assembly}}
       // {{ .GoComment }}
-      {{.GoName}} {{.GoMemLayout}}{{.GoTypeName}} `xml:"{{.XmlName}},omitempty" json:"{{.JsonName}},omitempty"`
+      {{.GoName}} {{.GoMemLayout}}{{.GoTypeNameMultiplexed}} `xml:"{{.XmlName}},omitempty" json:"{{.JsonName}},omitempty"`
     {{- end}}
 
   {{- range .Model.Choice}}

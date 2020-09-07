@@ -217,7 +217,17 @@ func (a *Assembly) GoTypeName() string {
 	return a.Def.GoTypeName()
 }
 
+func (a *Assembly) GoTypeNameMultiplexed() string {
+	if requiresMultiplexer(a) {
+		return (&Multiplexer{MultiplexedModel: a}).GoTypeName()
+	}
+	return a.GoTypeName()
+}
+
 func (a *Assembly) GoMemLayout() string {
+	if requiresMultiplexer(a) {
+		return ""
+	}
 	if a.GroupAs != nil {
 		return "[]"
 	}
