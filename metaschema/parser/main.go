@@ -70,6 +70,7 @@ type Metaschema struct {
 
 	ImportedMetaschema []Metaschema
 	Dependencies       map[string]GoType
+	Multiplexers       []Multiplexer
 	GoMod              string
 }
 

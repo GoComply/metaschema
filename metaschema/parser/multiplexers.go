@@ -20,7 +20,7 @@ func (mplex *Multiplexer) GoTypeNameOriginal() string {
 	return mplex.MultiplexedModel.GoTypeName()
 }
 
-func (metaschema *Metaschema) Multiplexers() []Multiplexer {
+func (metaschema *Metaschema) calculateMultiplexers() []Multiplexer {
 	uniq := map[string]MultiplexedModel{}
 	for _, da := range metaschema.DefineAssembly {
 		for i, a := range da.Model.Assembly {

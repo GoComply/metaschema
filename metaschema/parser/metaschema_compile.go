@@ -5,7 +5,12 @@ import (
 )
 
 func (metaschema *Metaschema) Compile() error {
-	return metaschema.linkDefinitions()
+	err := metaschema.linkDefinitions()
+	if err != nil {
+		return err
+	}
+	metaschema.Multiplexers = metaschema.calculateMultiplexers()
+	return nil
 }
 
 func (metaschema *Metaschema) registerDependency(name string, dependency GoType) {
