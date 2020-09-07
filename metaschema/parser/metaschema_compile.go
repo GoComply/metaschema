@@ -4,6 +4,10 @@ import (
 	"fmt"
 )
 
+func (metaschema *Metaschema) Compile() error {
+	return metaschema.linkDefinitions()
+}
+
 func (metaschema *Metaschema) registerDependency(name string, dependency GoType) {
 	if dependency.GetMetaschema() != metaschema {
 		if metaschema.Dependencies == nil {
@@ -62,7 +66,7 @@ func (metaschema *Metaschema) linkFlags(list []Flag) error {
 	return nil
 }
 
-func (metaschema *Metaschema) LinkDefinitions() error {
+func (metaschema *Metaschema) linkDefinitions() error {
 	var err error
 	for _, da := range metaschema.DefineAssembly {
 		if err = metaschema.linkFlags(da.Flags); err != nil {

@@ -67,7 +67,7 @@ func decode(metaschemaDir, goModule string, r io.Reader) (*parser.Metaschema, er
 
 		meta.ImportedMetaschema = append(meta.ImportedMetaschema, *importedMeta)
 	}
-	err := meta.LinkDefinitions()
+	err := meta.Compile()
 	meta.GoMod = goModule
 
 	return &meta, err
