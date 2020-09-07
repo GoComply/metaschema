@@ -20,21 +20,37 @@ func (mplex *Multiplexer) GoTypeNameOriginal() string {
 	return mplex.MultiplexedModel.GoTypeName()
 }
 
+func (metaschema *Metaschema) getMultiplexer(name string) *Multiplexer {
+	for _, m := range metaschema.ImportedMetaschema {
+		mplex := m.getMultiplexer(name)
+		if mplex != nil {
+			return mplex
+		}
+	}
+	for i, mplex := range metaschema.Multiplexers {
+		if mplex.GoTypeName() == name {
+			return &metaschema.Multiplexers[i]
+		}
+	}
+	return nil
+}
+
 func (metaschema *Metaschema) calculateMultiplexers() []Multiplexer {
-	uniq := map[string]MultiplexedModel{}
+	uniq := map[string]Multiplexer{}
 	for _, da := range metaschema.DefineAssembly {
 		for i, a := range da.Model.Assembly {
 			if a.requiresMultiplexer() {
-				uniq[a.GoTypeName()] = &da.Model.Assembly[i]
+				mplex := Multiplexer{MultiplexedModel: &da.Model.Assembly[i]}
+				if metaschema.getMultiplexer(mplex.GoTypeName()) == nil {
+					uniq[mplex.GoTypeName()] = mplex
+				}
 			}
 		}
 	}
 
 	result := make([]Multiplexer, 0, len(uniq))
 	for _, v := range uniq {
-		result = append(result, Multiplexer{
-			MultiplexedModel: v,
-		})
+		result = append(result, v)
 	}
 	sort.Slice(result, func(i, j int) bool { return result[i].GoTypeName() < result[j].GoTypeName() })
 	return result
