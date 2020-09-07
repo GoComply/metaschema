@@ -8,7 +8,6 @@ import (
 // Such model is only needed for serialization&deserialization as json and xml schemas differ
 //materially in their structure.
 type Multiplexer struct {
-	Name             string
 	MultiplexedModel MultiplexedModel
 	Metaschema       *Metaschema
 }
