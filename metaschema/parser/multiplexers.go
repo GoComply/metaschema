@@ -28,7 +28,7 @@ func (metaschema *Metaschema) Multiplexers() []Multiplexer {
 		}
 	}
 
-	result := []Multiplexer{}
+	result := make([]Multiplexer, 0, len(uniq))
 	for _, v := range uniq {
 		result = append(result, Multiplexer{
 			MultiplexedModel: v,
