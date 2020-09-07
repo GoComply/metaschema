@@ -20,6 +20,10 @@ func (mplex *Multiplexer) GetMetaschema() *Metaschema {
 	return mplex.Metaschema
 }
 
+func (mplex *Multiplexer) JsonKey() string {
+	return mplex.MultiplexedModel.IndexBy()
+}
+
 func (mplex *Multiplexer) GoTypeNameOriginal() string {
 	return mplex.MultiplexedModel.GoTypeName()
 }
@@ -69,6 +73,7 @@ func (metaschema *Metaschema) calculateMultiplexers() []Multiplexer {
 type MultiplexedModel interface {
 	GoTypeName() string
 	groupAs() *GroupAs
+	IndexBy() string
 }
 
 func requiresMultiplexer(mm MultiplexedModel) bool {

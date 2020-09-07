@@ -111,6 +111,7 @@ type DefineAssembly struct {
 	ShowDocs string `xml:"show-docs,attr"`
 	Address  string `xml:"address,attr"`
 
+	JsonKey     *JsonKey  `xml:"json-key"`
 	Flags       []Flag    `xml:"flag"`
 	FormalName  string    `xml:"formal-name"`
 	Description string    `xml:"description"`
@@ -261,6 +262,16 @@ func (a *Assembly) GoPackageName() string {
 
 func (a *Assembly) groupAs() *GroupAs {
 	return a.GroupAs
+}
+
+func (a *Assembly) IndexBy() string {
+	if a.Def == nil {
+		panic("Not implemented: IndexBy requires define-assembly to exists")
+	}
+	if a.Def.JsonKey == nil {
+		panic("Not implemented: IndexBy requires define-assembly to define <json-key>")
+	}
+	return strcase.ToCamel(a.Def.JsonKey.FlagName)
 }
 
 type Field struct {
@@ -543,4 +554,8 @@ var goDatatypeMap = map[datatype]string{
 
 func handleMultiline(comment string) string {
 	return strings.ReplaceAll(comment, "\n", "\n // ")
+}
+
+type JsonKey struct {
+	FlagName string `xml:"flag-name,attr"`
 }

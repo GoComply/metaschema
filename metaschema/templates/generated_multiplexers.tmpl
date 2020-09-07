@@ -5,6 +5,24 @@
 {{$m := . -}}
 package {{ $packageName }}
 
+import ("encoding/json")
+
 {{range .Multiplexers}}
   type {{.GoTypeName}} []{{.GoTypeNameOriginal}}
+
+  func (mplex *{{.GoTypeName}}) UnmarshalJSON(b []byte) error {
+          var insideMap map[string]{{.GoTypeNameOriginal}}
+	        if err := json.Unmarshal(b, &insideMap); err != nil {
+                  return err
+          }
+
+          l := make([]{{.GoTypeNameOriginal}}, 0, len(insideMap))
+          for k, v := range insideMap {
+                  v.{{.JsonKey}} = k
+                  l = append(l, v)
+	        }
+          (*mplex) = l
+          return nil
+  }
+
 {{- end}}
