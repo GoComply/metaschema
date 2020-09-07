@@ -217,10 +217,6 @@ func (a *Assembly) GoTypeName() string {
 	return a.Def.GoTypeName()
 }
 
-func (a *Assembly) requiresMultiplexer() bool {
-	return a.GroupAs != nil && a.GroupAs.InJson == "BY_KEY"
-}
-
 func (a *Assembly) GoMemLayout() string {
 	if a.GroupAs != nil {
 		return "[]"
