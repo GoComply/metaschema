@@ -20,7 +20,12 @@ func GenerateAll(metaschema *parser.Metaschema, baseDir string) error {
 	if err != nil {
 		return err
 	}
-	for _, templateName := range []string{"generated_models", "generated_multiplexers"} {
+	templates := []string{"generated_models"}
+	if len(metaschema.Multiplexers) > 0 {
+		templates = append(templates, "generated_multiplexers")
+	}
+
+	for _, templateName := range templates {
 		t, err := newTemplate(baseDir, templateName)
 		if err != nil {
 			return err
