@@ -77,5 +77,5 @@ type MultiplexedModel interface {
 }
 
 func requiresMultiplexer(mm MultiplexedModel) bool {
-	return mm.groupAs() != nil && mm.groupAs().InJson == "BY_KEY"
+	return mm.groupAs() != nil && mm.groupAs().ByKey()
 }

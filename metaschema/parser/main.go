@@ -404,6 +404,10 @@ type GroupAs struct {
 	InJson string `xml:"in-json,attr"`
 }
 
+func (ga *GroupAs) ByKey() bool {
+	return ga.InJson == "BY_KEY"
+}
+
 type Import struct {
 	Href *Href `xml:"href,attr"`
 }
