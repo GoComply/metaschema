@@ -20,6 +20,10 @@ func (mplex *Multiplexer) GetMetaschema() *Metaschema {
 	return mplex.Metaschema
 }
 
+func (mplex *Multiplexer) InJsonMap() bool {
+	return mplex.MultiplexedModel.groupAs().ByKey()
+}
+
 func (mplex *Multiplexer) JsonKey() string {
 	return mplex.MultiplexedModel.IndexBy()
 }
@@ -77,5 +81,5 @@ type MultiplexedModel interface {
 }
 
 func requiresMultiplexer(mm MultiplexedModel) bool {
-	return mm.groupAs() != nil && mm.groupAs().ByKey()
+	return mm.groupAs() != nil && mm.groupAs().requiresMultiplexer()
 }

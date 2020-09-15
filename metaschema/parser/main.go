@@ -404,8 +404,17 @@ type GroupAs struct {
 	InJson string `xml:"in-json,attr"`
 }
 
+func (ga *GroupAs) SingletonOrArray() bool {
+	// default: SINGLETON_OR_ARRAY
+	return ga.InJson == "" || ga.InJson == "SINGLETON_OR_ARRAY"
+}
+
 func (ga *GroupAs) ByKey() bool {
 	return ga.InJson == "BY_KEY"
+}
+
+func (ga *GroupAs) requiresMultiplexer() bool {
+	return ga.ByKey() || ga.SingletonOrArray()
 }
 
 type Import struct {

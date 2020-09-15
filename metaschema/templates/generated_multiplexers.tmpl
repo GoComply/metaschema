@@ -11,6 +11,7 @@ import ("encoding/json")
   type {{.GoTypeName}} []{{.GoTypeNameOriginal}}
 
   func (mplex *{{.GoTypeName}}) UnmarshalJSON(b []byte) error {
+          {{- if .InJsonMap}}
           var insideMap map[string]{{.GoTypeNameOriginal}}
 	        if err := json.Unmarshal(b, &insideMap); err != nil {
                   return err
@@ -21,6 +22,21 @@ import ("encoding/json")
                   v.{{.JsonKey}} = k
                   l = append(l, v)
 	        }
+          {{- else}}
+                  var l []{{.GoTypeNameOriginal}}
+                  switch b[0] {
+                  case '{':
+                          var singleton {{.GoTypeNameOriginal}}
+                          if err := json.Unmarshal(b, &singleton); err != nil {
+                                  return err
+                          }
+                          l = append(l, singleton)
+                  default:
+                          if err := json.Unmarshal(b, &l); err != nil {
+                                  return err
+                          }
+                 }
+          {{- end}}
           (*mplex) = l
           return nil
   }
