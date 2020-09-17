@@ -57,7 +57,7 @@ type {{.GoTypeName}} struct {
   {{.GoName}} {{.GoDatatype}} `xml:"{{.XmlName}},attr,omitempty" json:"{{.JsonName}},omitempty"`
   {{end -}}
 
-  Value string `xml:",chardata" json:"{{.JsonName}},omitempty"`
+  {{.GoName}} string `xml:",chardata" json:"{{.JsonName}},omitempty"`
 }
 {{- else}}
   {{- if .IsMarkup }}

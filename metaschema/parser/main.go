@@ -174,6 +174,10 @@ func (df *DefineField) JsonName() string {
 	return "value"
 }
 
+func (df *DefineField) GoName() string {
+	return strcase.ToCamel(df.JsonName())
+}
+
 type DefineFlag struct {
 	Name     string   `xml:"name,attr"`
 	AsType   datatype `xml:"as-type,attr"`
