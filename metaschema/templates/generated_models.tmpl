@@ -13,11 +13,7 @@ type {{.GoTypeName}} struct {
   {{- end}}
 {{- range .Flags}}
   // {{ .GoComment }}
-  {{- if and (eq "id" .Name) (eq "profile" $packageName)}}
-  Id string `xml:"param-id,attr,omitempty" json:"id,omitempty"`
-  {{- else}}
   {{.GoName}} {{.GoDatatype}} `xml:"{{.XmlName}},attr,omitempty" json:"{{.JsonName}},omitempty"`
-  {{- end}}
 {{- end}}
   {{if .Model}}
     {{ range .Model.Field}}
