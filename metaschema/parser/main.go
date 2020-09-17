@@ -178,6 +178,10 @@ func (df *DefineField) JsonName() string {
 	return "value"
 }
 
+func (df *DefineField) Empty() bool {
+	return df.AsType == AsTypeEmpty
+}
+
 func (df *DefineField) GoName() string {
 	return strcase.ToCamel(df.JsonName())
 }

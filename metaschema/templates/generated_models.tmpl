@@ -57,7 +57,9 @@ type {{.GoTypeName}} struct {
   {{.GoName}} {{.GoDatatype}} `xml:"{{.XmlName}},attr,omitempty" json:"{{.JsonName}},omitempty"`
   {{end -}}
 
+  {{- if not .Empty -}}
   {{.GoName}} string `xml:",chardata" json:"{{.JsonName}},omitempty"`
+  {{- end}}
 }
 {{- else}}
   {{- if .IsMarkup }}
