@@ -170,6 +170,10 @@ func (df *DefineField) IsMarkup() bool {
 	return df.AsType == AsTypeMarkupMultiLine
 }
 
+func (df *DefineField) JsonName() string {
+	return "value"
+}
+
 type DefineFlag struct {
 	Name     string   `xml:"name,attr"`
 	AsType   datatype `xml:"as-type,attr"`
