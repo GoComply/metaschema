@@ -327,7 +327,7 @@ func (f *Field) JsonName() string {
 	if f.GroupAs != nil {
 		return f.GroupAs.Name
 	}
-	return strcase.ToLowerCamel(f.XmlName())
+	return f.XmlName()
 }
 
 func (f *Field) XmlName() string {
