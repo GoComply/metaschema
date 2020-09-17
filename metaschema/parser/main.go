@@ -147,6 +147,7 @@ type DefineField struct {
 	Remarks     *Remarks  `xml:"remarks"`
 	Examples    []Example `xml:"example"`
 	AsType      AsType    `xml:"as-type,attr"`
+	JsonValueKey string `xml:"json-value-key"`
 	Metaschema  *Metaschema
 }
 
@@ -171,6 +172,9 @@ func (df *DefineField) IsMarkup() bool {
 }
 
 func (df *DefineField) JsonName() string {
+	if df.JsonValueKey != "" {
+		return df.JsonValueKey
+	}
 	return "value"
 }
 
