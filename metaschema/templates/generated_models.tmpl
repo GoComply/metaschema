@@ -58,7 +58,7 @@ type {{.GoTypeName}} struct {
   {{- end}}
 }
 {{- else}}
-  {{- if .IsMarkup }}
+  {{- if .IsMarkup -}}
   type {{ .GoTypeName }} = Markup
   {{- else }}
   type {{ .GoTypeName }} string
