@@ -141,14 +141,14 @@ type DefineField struct {
 	Name     string `xml:"name,attr"`
 	ShowDocs string `xml:"show-docs,attr"`
 
-	Flags       []Flag    `xml:"flag"`
-	FormalName  string    `xml:"formal-name"`
-	Description string    `xml:"description"`
-	Remarks     *Remarks  `xml:"remarks"`
-	Examples    []Example `xml:"example"`
-	AsType      AsType    `xml:"as-type,attr"`
-	JsonValueKey string `xml:"json-value-key"`
-	Metaschema  *Metaschema
+	Flags        []Flag    `xml:"flag"`
+	FormalName   string    `xml:"formal-name"`
+	Description  string    `xml:"description"`
+	Remarks      *Remarks  `xml:"remarks"`
+	Examples     []Example `xml:"example"`
+	AsType       AsType    `xml:"as-type,attr"`
+	JsonValueKey string    `xml:"json-value-key"`
+	Metaschema   *Metaschema
 }
 
 func (df *DefineField) GoTypeName() string {
