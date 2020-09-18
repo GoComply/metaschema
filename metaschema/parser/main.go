@@ -401,7 +401,7 @@ func (f *Flag) GoName() string {
 }
 
 func (f *Flag) JsonName() string {
-	return strcase.ToLowerCamel(f.XmlName())
+	return f.XmlName()
 }
 func (f *Flag) XmlName() string {
 	if f.Name != "" {
