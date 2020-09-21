@@ -290,6 +290,20 @@ func (a *Assembly) IndexBy() string {
 	return strcase.ToCamel(a.Def.JsonKey.FlagName)
 }
 
+func (a *Assembly) XmlGroupping() string {
+	if a.GroupAs == nil {
+		return ""
+	}
+	if a.GroupAs.InXml == "UNGROUPED" || a.GroupAs.InXml == "" {
+		return ""
+	}
+	if a.GroupAs.InXml == "GROUPED" {
+		return a.GroupAs.Name + ">"
+	}
+	panic("Not implemented group-as/@in-xml=" + a.GroupAs.InXml)
+	return ""
+}
+
 type Field struct {
 	Required string `xml:"required,attr"`
 
@@ -418,6 +432,7 @@ type Choice struct {
 type GroupAs struct {
 	Name   string `xml:"name,attr"`
 	InJson string `xml:"in-json,attr"`
+	InXml  string `xml:"in-xml,attr"`
 }
 
 func (ga *GroupAs) SingletonOrArray() bool {
