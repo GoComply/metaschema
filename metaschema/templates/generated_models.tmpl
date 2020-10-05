@@ -34,7 +34,7 @@ type {{.GoTypeName}} struct {
 
   {{- range .Assembly}}
   // {{ .GoComment }}
-  {{.GoName}} {{.GoMemLayout}}{{.GoTypeName}} `xml:"{{.XmlName}},omitempty" json:"{{.JsonName}},omitempty"`
+  {{.GoName}} {{.GoMemLayout}}{{.GoTypeName}} `xml:"{{.XmlGroupping}}{{.XmlName}},omitempty" json:"{{.JsonName}},omitempty"`
   {{- end}}
 
   {{- end}}
