@@ -304,6 +304,10 @@ func (a *Assembly) XmlGroupping() string {
 	return ""
 }
 
+func (a *Assembly) XmlAnnotation() string {
+	return a.XmlGroupping() + a.XmlName() + ",omitempty"
+}
+
 type Field struct {
 	Required string `xml:"required,attr"`
 
