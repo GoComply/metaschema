@@ -168,7 +168,7 @@ func (df *DefineField) GetMetaschema() *Metaschema {
 }
 
 func (df *DefineField) IsMarkup() bool {
-	return df.AsType == AsTypeMarkupMultiLine
+	return df.AsType == AsTypeMarkupMultiLine || df.AsType == AsTypeMarkupLine
 }
 
 func (df *DefineField) JsonName() string {
