@@ -368,6 +368,11 @@ func (f *Field) XmlName() string {
 	return f.Def.Name
 }
 
+func (f *Field) XmlAnnotation() string {
+	return f.XmlName() + ",omitempty"
+
+}
+
 type Flag struct {
 	Name     string   `xml:"name,attr"`
 	AsType   datatype `xml:"as-type,attr"`
