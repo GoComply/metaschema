@@ -315,6 +315,7 @@ type Field struct {
 	Remarks     *Remarks `xml:"remarks"`
 	Ref         string   `xml:"ref,attr"`
 	GroupAs     *GroupAs `xml:"group-as"`
+	InXml       string   `xml:"in-xml,attr"`
 	Def         *DefineField
 	Metaschema  *Metaschema
 }
@@ -369,6 +370,9 @@ func (f *Field) XmlName() string {
 }
 
 func (f *Field) XmlAnnotation() string {
+	if f.InXml == "UNWRAPPED" {
+		return ",any"
+	}
 	return f.XmlName() + ",omitempty"
 
 }
