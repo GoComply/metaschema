@@ -1,4 +1,4 @@
-# Metaschema modeling language ![Build](https://github.com/GoComply/metaschema/workflows/Metaschema%20Build%20CI/badge.svg) ![Process NIST OSCAL](https://github.com/GoComply/metaschema/workflows/Process%20NIST%20OSCAL/badge.svg) [![Gitter](https://badges.gitter.im/GoComply/community.svg)](https://gitter.im/GoComply/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+# Metaschema modeling language ![Build](https://github.com/GoComply/metaschema/workflows/Metaschema%20Build%20CI/badge.svg) ![Process NIST OSCAL](https://github.com/GoComply/metaschema/workflows/Process%20NIST%20OSCAL/badge.svg) [![Gitter](https://badges.gitter.im/GoComply/community.svg)](https://gitter.im/GoComply/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge) [![PkgGoDev](https://pkg.go.dev/badge/github.com/gocomply/metaschema)](https://pkg.go.dev/github.com/gocomply/metaschema)
 
 ## Introduction
 
