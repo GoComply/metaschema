@@ -548,16 +548,6 @@ func (h *Href) UnmarshalXMLAttr(attr xml.Attr) error {
 	return nil
 }
 
-func (h *Href) MarshalXMLAttr(name xml.Name) (xml.Attr, error) {
-	if h.URL != nil {
-		rawURI := h.URL.String()
-
-		return xml.Attr{Name: name, Value: rawURI}, nil
-	}
-
-	return xml.Attr{Name: name}, nil
-}
-
 type AsType string
 
 var goDatatypeMap = map[AsType]string{
