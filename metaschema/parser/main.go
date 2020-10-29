@@ -211,7 +211,6 @@ type Model struct {
 	Field    []Field    `xml:"field"`
 	Choice   []Choice   `xml:"choice"`
 	Prose    *struct{}  `xml:"prose"`
-	Any      *struct{}  `xml:"any"`
 }
 
 type Assembly struct {
