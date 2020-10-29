@@ -22,17 +22,7 @@ const (
 	AsTypeEmail           AsType = "email"
 	AsTypeURI             AsType = "uri"
 	AsTypeBase64          AsType = "base64Binary"
-
-	ShowDocsXML     ShowDocs = "xml"
-	ShowDocsJSON    ShowDocs = "json"
-	ShowDocsXMLJSON ShowDocs = "xml json"
 )
-
-var ShowDocsOptions = []ShowDocs{
-	ShowDocsXML,
-	ShowDocsJSON,
-	ShowDocsXMLJSON,
-}
 
 type GoType interface {
 	GoTypeName() string
@@ -107,9 +97,8 @@ func (Metaschema *Metaschema) ContainsRootElement() bool {
 // DefineAssembly is a definition for for an object or element that contains
 // structured content
 type DefineAssembly struct {
-	Name     string `xml:"name,attr"`
-	ShowDocs string `xml:"show-docs,attr"`
-	Address  string `xml:"address,attr"`
+	Name    string `xml:"name,attr"`
+	Address string `xml:"address,attr"`
 
 	JsonKey     *JsonKey  `xml:"json-key"`
 	Flags       []Flag    `xml:"flag"`
@@ -138,8 +127,7 @@ func (a *DefineAssembly) GetMetaschema() *Metaschema {
 }
 
 type DefineField struct {
-	Name     string `xml:"name,attr"`
-	ShowDocs string `xml:"show-docs,attr"`
+	Name string `xml:"name,attr"`
 
 	Flags        []Flag    `xml:"flag"`
 	FormalName   string    `xml:"formal-name"`
@@ -187,9 +175,8 @@ func (df *DefineField) GoName() string {
 }
 
 type DefineFlag struct {
-	Name     string   `xml:"name,attr"`
-	AsType   datatype `xml:"as-type,attr"`
-	ShowDocs ShowDocs `xml:"show-docs,attr"`
+	Name   string   `xml:"name,attr"`
+	AsType datatype `xml:"as-type,attr"`
 
 	FormalName  string    `xml:"formal-name"`
 	Description string    `xml:"description"`
@@ -565,21 +552,6 @@ func (h *Href) MarshalXMLAttr(name xml.Name) (xml.Attr, error) {
 }
 
 type AsType string
-
-type ShowDocs string
-
-func (sd ShowDocs) UnmarshalXMLAttr(attr xml.Attr) error {
-	showDocs := ShowDocs(attr.Value)
-
-	for _, showDocsOption := range ShowDocsOptions {
-		if showDocs == showDocsOption {
-			sd = showDocs
-			return nil
-		}
-	}
-
-	return fmt.Errorf("Show docs option \"%s\" is not a valid option", attr.Value)
-}
 
 type datatype string
 
