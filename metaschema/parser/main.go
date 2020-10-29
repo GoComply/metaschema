@@ -10,18 +10,25 @@ import (
 )
 
 const (
-	AsTypeBoolean         AsType = "boolean"
-	AsTypeEmpty           AsType = "empty"
-	AsTypeString          AsType = "string"
-	AsTypeMixed           AsType = "mixed"
-	AsTypeMarkupLine      AsType = "markup-line"
-	AsTypeMarkupMultiLine AsType = "markup-multiline"
-	AsTypeDate            AsType = "date"
-	AsTypeDateTimeTZ      AsType = "dateTime-with-timezone"
-	AsTypeNCName          AsType = "NCName"
-	AsTypeEmail           AsType = "email"
-	AsTypeURI             AsType = "uri"
-	AsTypeBase64          AsType = "base64Binary"
+	AsTypeBoolean            AsType = "boolean"
+	AsTypeEmpty              AsType = "empty"
+	AsTypeString             AsType = "string"
+	AsTypeMixed              AsType = "mixed"
+	AsTypeMarkupLine         AsType = "markup-line"
+	AsTypeMarkupMultiLine    AsType = "markup-multiline"
+	AsTypeDate               AsType = "date"
+	AsTypeDateTimeTZ         AsType = "dateTime-with-timezone"
+	AsTypeNCName             AsType = "NCName"
+	AsTypeEmail              AsType = "email"
+	AsTypeURI                AsType = "uri"
+	AsTypeBase64             AsType = "base64Binary"
+	AsTypeIDRef              AsType = "IDREF"
+	AsTypeNMToken            AsType = "NMTOKEN"
+	AsTypeID                 AsType = "ID"
+	AsTypeAnyURI             AsType = "anyURI"
+	AsTypeURIRef             AsType = "uri-reference"
+	AsTypeUUID               AsType = "uuid"
+	AsTypeNonNegativeInteger AsType = "nonNegativeInteger"
 )
 
 type GoType interface {
@@ -175,8 +182,8 @@ func (df *DefineField) GoName() string {
 }
 
 type DefineFlag struct {
-	Name   string   `xml:"name,attr"`
-	AsType datatype `xml:"as-type,attr"`
+	Name   string `xml:"name,attr"`
+	AsType AsType `xml:"as-type,attr"`
 
 	FormalName  string    `xml:"formal-name"`
 	Description string    `xml:"description"`
@@ -364,9 +371,9 @@ func (f *Field) XmlAnnotation() string {
 }
 
 type Flag struct {
-	Name     string   `xml:"name,attr"`
-	AsType   datatype `xml:"as-type,attr"`
-	Required string   `xml:"required,attr"`
+	Name     string `xml:"name,attr"`
+	AsType   AsType `xml:"as-type,attr"`
+	Required string `xml:"required,attr"`
 
 	Description string   `xml:"description"`
 	Remarks     *Remarks `xml:"remarks"`
@@ -553,31 +560,16 @@ func (h *Href) MarshalXMLAttr(name xml.Name) (xml.Attr, error) {
 
 type AsType string
 
-type datatype string
-
-const (
-	datatypeString             datatype = "string"
-	datatypeIDRef              datatype = "IDREF"
-	datatypeNCName             datatype = "NCName"
-	datatypeNMToken            datatype = "NMTOKEN"
-	datatypeID                 datatype = "ID"
-	datatypeAnyURI             datatype = "anyURI"
-	datatypeURIRef             datatype = "uri-reference"
-	datatypeURI                datatype = "uri"
-	datatypeUUID               datatype = "uuid"
-	datatypeNonNegativeInteger datatype = "nonNegativeInteger"
-)
-
-var goDatatypeMap = map[datatype]string{
-	datatypeString:             "string",
-	datatypeIDRef:              "string",
-	datatypeNCName:             "string",
-	datatypeNMToken:            "string",
-	datatypeID:                 "string",
-	datatypeURIRef:             "string",
-	datatypeURI:                "string",
-	datatypeUUID:               "string",
-	datatypeNonNegativeInteger: "uint64",
+var goDatatypeMap = map[AsType]string{
+	AsTypeString:             "string",
+	AsTypeIDRef:              "string",
+	AsTypeNCName:             "string",
+	AsTypeNMToken:            "string",
+	AsTypeID:                 "string",
+	AsTypeURIRef:             "string",
+	AsTypeURI:                "string",
+	AsTypeUUID:               "string",
+	AsTypeNonNegativeInteger: "uint64",
 }
 
 func handleMultiline(comment string) string {
