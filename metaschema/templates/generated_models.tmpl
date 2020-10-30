@@ -20,19 +20,6 @@ type {{.GoTypeName}} struct {
       // {{ .GoComment }}
       {{.GoName}} {{.GoMemLayout}}{{.GoTypeNameMultiplexed}} `xml:"{{.XmlAnnotation}}" json:"{{.JsonName}},omitempty"`
     {{- end}}
-
-  {{- range .Model.Choice}}
-  {{- range .Field}}
-  // {{ .GoComment }}
-  {{.GoName}} {{.GoMemLayout}}{{.GoTypeName}} `xml:"{{.XmlAnnotation}}" json:"{{.JsonName}},omitempty"`
-  {{- end}}
-
-  {{- range .Assembly}}
-  // {{ .GoComment }}
-  {{.GoName}} {{.GoMemLayout}}{{.GoTypeName}} `xml:"{{.XmlAnnotation}}" json:"{{.JsonName}},omitempty"`
-  {{- end}}
-
-  {{- end}}
   {{end}}
 
 }

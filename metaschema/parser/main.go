@@ -89,21 +89,15 @@ func (Metaschema *Metaschema) ContainsRootElement() bool {
 }
 
 type Model struct {
-	Assembly []Assembly `xml:"assembly"`
-	Field    []Field    `xml:"field"`
-	Choice   []Choice   `xml:"choice"`
-	Prose    *struct{}  `xml:"prose"`
+	Assembly     []Assembly `xml:"assembly"`
+	Field        []Field    `xml:"field"`
+	Choice       []Choice   `xml:"choice"`
+	Prose        *struct{}  `xml:"prose"`
+	sortedChilds []GoStructItem
 }
 
 func (m *Model) GoStructItems() []GoStructItem {
-	res := make([]GoStructItem, len(m.Assembly)+len(m.Field))
-	for i, _ := range m.Field {
-		res[i] = &m.Field[i]
-	}
-	for i, _ := range m.Assembly {
-		res[i+len(m.Field)] = &m.Assembly[i]
-	}
-	return res
+	return m.sortedChilds
 }
 
 type Choice struct {

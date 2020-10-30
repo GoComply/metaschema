@@ -24,6 +24,15 @@ func (metaschema *Metaschema) registerDependency(name string, dependency GoType)
 	}
 }
 
+func (metaschema *Metaschema) linkItems(list []GoStructItem) error {
+	for i, _ := range list {
+		err := list[i].compile(metaschema)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
 func (metaschema *Metaschema) linkAssemblies(list []Assembly) error {
 	for i, _ := range list {
 		a := &list[i]
@@ -63,19 +72,14 @@ func (metaschema *Metaschema) linkDefinitions() error {
 		if err = metaschema.linkFlags(da.Flags); err != nil {
 			return err
 		}
+		if err = metaschema.linkItems(da.Model.sortedChilds); err != nil {
+			return err
+		}
 		if err = metaschema.linkAssemblies(da.Model.Assembly); err != nil {
 			return err
 		}
 		if err = metaschema.linkFields(da.Model.Field); err != nil {
 			return err
-		}
-		for _, c := range da.Model.Choice {
-			if err = metaschema.linkAssemblies(c.Assembly); err != nil {
-				return err
-			}
-			if err = metaschema.linkFields(c.Field); err != nil {
-				return err
-			}
 		}
 	}
 
