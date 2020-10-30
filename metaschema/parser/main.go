@@ -13,6 +13,15 @@ type GoType interface {
 	GetMetaschema() *Metaschema
 }
 
+type GoStructItem interface {
+	GoComment() string
+	GoMemLayout() string
+	GoName() string
+	GoTypeNameMultiplexed() string
+	JsonName() string
+	XmlAnnotation() string
+}
+
 // Metaschema is the root metaschema element
 type Metaschema struct {
 	XMLName xml.Name `xml:"http://csrc.nist.gov/ns/oscal/metaschema/1.0 METASCHEMA"`
@@ -83,6 +92,14 @@ type Model struct {
 	Field    []Field    `xml:"field"`
 	Choice   []Choice   `xml:"choice"`
 	Prose    *struct{}  `xml:"prose"`
+}
+
+func (m *Model) GoStructItems() []GoStructItem {
+	res := make([]GoStructItem, len(m.Assembly))
+	for i, _ := range m.Assembly {
+		res[i] = &m.Assembly[i]
+	}
+	return res
 }
 
 type Choice struct {
