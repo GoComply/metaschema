@@ -79,6 +79,10 @@ func (f *Field) GoTypeName() string {
 	return f.Def.GoTypeName()
 }
 
+func (f *Field) GoTypeNameMultiplexed() string {
+	return f.GoTypeName()
+}
+
 func (f *Field) GoPackageName() string {
 	if f.Ref == "" {
 		return ""

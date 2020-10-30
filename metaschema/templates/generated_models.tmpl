@@ -16,11 +16,6 @@ type {{.GoTypeName}} struct {
   {{.GoName}} {{.GoDatatype}} `xml:"{{.XmlName}},attr,omitempty" json:"{{.JsonName}},omitempty"`
 {{- end}}
   {{if .Model}}
-    {{ range .Model.Field}}
-      // {{ .GoComment }}
-      {{.GoName}} {{.GoMemLayout}}{{.GoTypeName}} `xml:"{{.XmlAnnotation}}" json:"{{.JsonName}},omitempty"`
-    {{- end}}
-
     {{- range .Model.GoStructItems}}
       // {{ .GoComment }}
       {{.GoName}} {{.GoMemLayout}}{{.GoTypeNameMultiplexed}} `xml:"{{.XmlAnnotation}}" json:"{{.JsonName}},omitempty"`

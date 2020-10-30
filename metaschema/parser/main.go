@@ -95,9 +95,12 @@ type Model struct {
 }
 
 func (m *Model) GoStructItems() []GoStructItem {
-	res := make([]GoStructItem, len(m.Assembly))
+	res := make([]GoStructItem, len(m.Assembly)+len(m.Field))
+	for i, _ := range m.Field {
+		res[i] = &m.Field[i]
+	}
 	for i, _ := range m.Assembly {
-		res[i] = &m.Assembly[i]
+		res[i+len(m.Field)] = &m.Assembly[i]
 	}
 	return res
 }
