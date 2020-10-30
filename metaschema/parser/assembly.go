@@ -129,3 +129,16 @@ func (a *Assembly) XmlGroupping() string {
 func (a *Assembly) XmlAnnotation() string {
 	return a.XmlGroupping() + a.XmlName() + ",omitempty"
 }
+
+func (a *Assembly) compile(metaschema *Metaschema) error {
+	if a.Ref != "" {
+		var err error
+		a.Metaschema = metaschema
+		a.Def, err = a.Metaschema.GetDefineAssembly(a.Ref)
+		if err != nil {
+			return err
+		}
+		a.Metaschema.registerDependency(a.Ref, a.Def)
+	}
+	return nil
+}

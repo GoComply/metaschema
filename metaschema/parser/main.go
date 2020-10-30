@@ -20,6 +20,7 @@ type GoStructItem interface {
 	GoTypeNameMultiplexed() string
 	JsonName() string
 	XmlAnnotation() string
+	compile(*Metaschema) error
 }
 
 // Metaschema is the root metaschema element

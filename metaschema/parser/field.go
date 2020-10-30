@@ -124,3 +124,16 @@ func (f *Field) XmlAnnotation() string {
 	return f.XmlName() + ",omitempty"
 
 }
+
+func (f *Field) compile(metaschema *Metaschema) error {
+	if f.Ref != "" {
+		var err error
+		f.Metaschema = metaschema
+		f.Def, err = f.Metaschema.GetDefineField(f.Ref)
+		if err != nil {
+			return err
+		}
+		f.Metaschema.registerDependency(f.Ref, f.Def)
+	}
+	return nil
+}

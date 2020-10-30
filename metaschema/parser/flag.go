@@ -83,3 +83,12 @@ func (f *Flag) XmlName() string {
 	}
 	return f.Def.Name
 }
+
+func (f *Flag) compile(metaschema *Metaschema) error {
+	var err error
+	if f.Ref != "" {
+		f.Metaschema = metaschema
+		f.Def, err = f.Metaschema.GetDefineFlag(f.Ref)
+	}
+	return err
+}

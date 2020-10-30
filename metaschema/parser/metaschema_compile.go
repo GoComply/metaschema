@@ -25,47 +25,33 @@ func (metaschema *Metaschema) registerDependency(name string, dependency GoType)
 }
 
 func (metaschema *Metaschema) linkAssemblies(list []Assembly) error {
-	var err error
 	for i, _ := range list {
 		a := &list[i]
-		if a.Ref != "" {
-			a.Def, err = metaschema.GetDefineAssembly(a.Ref)
-			if err != nil {
-				return err
-			}
-			a.Metaschema = metaschema
-			metaschema.registerDependency(a.Ref, a.Def)
+		err := a.compile(metaschema)
+		if err != nil {
+			return err
 		}
 	}
 	return nil
 }
 
 func (metaschema *Metaschema) linkFields(list []Field) error {
-	var err error
 	for i, _ := range list {
 		f := &list[i]
-		if f.Ref != "" {
-			f.Def, err = metaschema.GetDefineField(f.Ref)
-			if err != nil {
-				return err
-			}
-			f.Metaschema = metaschema
-			metaschema.registerDependency(f.Ref, f.Def)
+		err := f.compile(metaschema)
+		if err != nil {
+			return err
 		}
 	}
 	return nil
 }
 
 func (metaschema *Metaschema) linkFlags(list []Flag) error {
-	var err error
 	for i, _ := range list {
 		f := &list[i]
-		if f.Ref != "" {
-			f.Def, err = metaschema.GetDefineFlag(f.Ref)
-			if err != nil {
-				return err
-			}
-			f.Metaschema = metaschema
+		err := f.compile(metaschema)
+		if err != nil {
+			return err
 		}
 	}
 	return nil
