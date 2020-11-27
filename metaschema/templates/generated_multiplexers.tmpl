@@ -61,7 +61,7 @@ import (
                           return []byte{}, err
                   }
 
-                  text, err := json.Marshal(v)
+                  text, err := json.Marshal(&v)
                   if err != nil {
                           return []byte{}, err
                   }
@@ -85,7 +85,7 @@ import (
                   }
                   empty = false
 
-                  text, err := json.Marshal(v)
+                  text, err := json.Marshal(&v)
                   if err != nil {
                           return []byte{}, err
                   }
