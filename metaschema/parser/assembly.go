@@ -81,7 +81,7 @@ func (a *Assembly) JsonName() string {
 	if a.GroupAs != nil {
 		return a.GroupAs.Name
 	}
-	return strcase.ToLowerCamel(a.XmlName())
+	return a.XmlName()
 }
 
 func (a *Assembly) XmlName() string {
