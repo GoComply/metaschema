@@ -61,6 +61,7 @@ import (
                           return []byte{}, err
                   }
 
+                  v.{{.JsonKey}} = ""
                   text, err := json.Marshal(&v)
                   if err != nil {
                           return []byte{}, err
