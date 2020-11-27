@@ -118,6 +118,20 @@ func (f *Field) XmlName() string {
 	return f.Def.Name
 }
 
+func (f *Field) groupAs() *GroupAs {
+	return f.GroupAs
+}
+
+func (f *Field) IndexBy() string {
+	if f.Def == nil {
+		panic("Not implemented: IndexBy requires define-field to exist")
+	}
+	if f.Def.JsonKey == nil {
+		panic("Not implemented: IndexBy requires define-field to define <json-key>")
+	}
+	return strcase.ToCamel(f.Def.JsonKey.FlagName)
+}
+
 func (f *Field) XmlAnnotation() string {
 	if f.InXml == "UNWRAPPED" {
 		return ",any"
