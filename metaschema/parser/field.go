@@ -81,6 +81,9 @@ func (f *Field) GoTypeName() string {
 }
 
 func (f *Field) GoTypeNameMultiplexed() string {
+	if requiresMultiplexer(f) {
+		return (&Multiplexer{MultiplexedModel: f}).GoTypeName()
+	}
 	return f.GoTypeName()
 }
 
@@ -95,6 +98,9 @@ func (f *Field) GoPackageName() string {
 }
 
 func (f *Field) GoMemLayout() string {
+	if requiresMultiplexer(f) {
+		return ""
+	}
 	if f.GroupAs != nil {
 		return "[]"
 	} else if f.requiresPointer() {

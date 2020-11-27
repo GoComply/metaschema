@@ -64,6 +64,21 @@ func (metaschema *Metaschema) calculateMultiplexers() []Multiplexer {
 				}
 			}
 		}
+		for i, f := range da.Model.Field {
+			if requiresMultiplexer(&f) {
+				mplex := Multiplexer{
+					MultiplexedModel: &da.Model.Field[i],
+					Metaschema:       metaschema,
+				}
+				existing := metaschema.getMultiplexer(mplex.GoTypeName())
+				if existing != nil {
+					metaschema.registerDependency(mplex.GoTypeName(), existing)
+				} else {
+					uniq[mplex.GoTypeName()] = mplex
+				}
+			}
+
+		}
 	}
 
 	result := make([]Multiplexer, 0, len(uniq))
