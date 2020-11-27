@@ -13,6 +13,7 @@ type DefineField struct {
 	Remarks      *Remarks  `xml:"remarks"`
 	Examples     []Example `xml:"example"`
 	AsType       AsType    `xml:"as-type,attr"`
+	JsonKey      *JsonKey  `xml:"json-key"`
 	JsonValueKey string    `xml:"json-value-key"`
 	Metaschema   *Metaschema
 }
