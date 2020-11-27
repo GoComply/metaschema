@@ -104,7 +104,7 @@ func (a *Assembly) groupAs() *GroupAs {
 
 func (a *Assembly) IndexBy() string {
 	if a.Def == nil {
-		panic("Not implemented: IndexBy requires define-assembly to exists")
+		panic("Not implemented: IndexBy requires define-assembly to exist")
 	}
 	if a.Def.JsonKey == nil {
 		panic("Not implemented: IndexBy requires define-assembly to define <json-key>")
