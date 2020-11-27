@@ -13,12 +13,12 @@ type {{.GoTypeName}} struct {
   {{- end}}
 {{- range .Flags}}
   // {{ .GoComment }}
-  {{.GoName}} {{.GoDatatype}} `xml:"{{.XmlName}},attr,omitempty" json:"{{.JsonName}},omitempty"`
+  {{.GoName}} {{.GoDatatype}} `xml:"{{.XmlName}},attr,omitempty" json:"{{.JsonAnnotation}}"`
 {{- end}}
   {{if .Model}}
     {{- range .Model.GoStructItems}}
       // {{ .GoComment }}
-      {{.GoName}} {{.GoMemLayout}}{{.GoTypeNameMultiplexed}} `xml:"{{.XmlAnnotation}}" json:"{{.JsonName}},omitempty"`
+      {{.GoName}} {{.GoMemLayout}}{{.GoTypeNameMultiplexed}} `xml:"{{.XmlAnnotation}}" json:"{{.JsonAnnotation}}"`
     {{- end}}
   {{end}}
 
@@ -32,7 +32,7 @@ type {{.GoTypeName}} struct {
 type {{.GoTypeName}} struct {
   {{- range .Flags}}
   // {{ .GoComment }}
-  {{.GoName}} {{.GoDatatype}} `xml:"{{.XmlName}},attr,omitempty" json:"{{.JsonName}},omitempty"`
+  {{.GoName}} {{.GoDatatype}} `xml:"{{.XmlName}},attr,omitempty" json:"{{.JsonAnnotation}}"`
   {{end -}}
 
   {{- if not .Empty -}}

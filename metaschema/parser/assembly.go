@@ -130,6 +130,10 @@ func (a *Assembly) XmlAnnotation() string {
 	return a.XmlGroupping() + a.XmlName() + ",omitempty"
 }
 
+func (a *Assembly) JsonAnnotation() string {
+	return a.JsonName() + ",omitempty"
+}
+
 func (a *Assembly) compile(metaschema *Metaschema) error {
 	if a.Ref != "" {
 		var err error

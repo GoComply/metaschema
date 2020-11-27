@@ -113,6 +113,10 @@ func (f *Field) GoName() string {
 	return strcase.ToCamel(f.JsonName())
 }
 
+func (f *Field) JsonAnnotation() string {
+	return f.JsonName() + ",omitempty"
+}
+
 func (f *Field) JsonName() string {
 	if f.GroupAs != nil {
 		return f.GroupAs.Name

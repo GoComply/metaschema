@@ -77,11 +77,16 @@ func (f *Flag) GoName() string {
 func (f *Flag) JsonName() string {
 	return f.XmlName()
 }
+
 func (f *Flag) XmlName() string {
 	if f.Name != "" {
 		return f.Name
 	}
 	return f.Def.Name
+}
+
+func (f *Flag) JsonAnnotation() string {
+	return f.JsonName() + ",omitempty"
 }
 
 func (f *Flag) compile(metaschema *Metaschema) error {
