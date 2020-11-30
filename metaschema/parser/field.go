@@ -54,6 +54,9 @@ func (df *DefineField) GoName() string {
 }
 
 func (df *DefineField) JsonAnnotation() string {
+	if df.JsonValueKey != "" {
+		return df.JsonName()
+	}
 	return df.JsonName() + ",omitempty"
 }
 
