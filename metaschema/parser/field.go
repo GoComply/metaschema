@@ -53,6 +53,10 @@ func (df *DefineField) GoName() string {
 	return strcase.ToCamel(df.JsonName())
 }
 
+func (df *DefineField) JsonAnnotation() string {
+	return df.JsonName() + ",omitempty"
+}
+
 type Field struct {
 	Required string `xml:"required,attr"`
 

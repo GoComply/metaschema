@@ -36,7 +36,7 @@ type {{.GoTypeName}} struct {
   {{end -}}
 
   {{- if not .Empty -}}
-  {{.GoName}} string `xml:",chardata" json:"{{.JsonName}},omitempty"`
+  {{.GoName}} string `xml:",chardata" json:"{{.JsonAnnotation}}"`
   {{- end}}
 }
 {{- else}}
