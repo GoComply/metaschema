@@ -59,6 +59,7 @@ func decode(metaschemaDir, goModule string, r io.Reader) (*parser.Metaschema, er
 		}
 		defer imf.Close()
 
+		fmt.Printf("  Processing imported href: %s\n", imported.Href.URL.String())
 		importedMeta, err := decode(metaschemaDir, goModule, imf)
 
 		if err != nil {
