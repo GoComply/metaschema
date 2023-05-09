@@ -26,7 +26,11 @@ func Generate(metaschemaDir, goModule, outputDir string) error {
 		if err != nil {
 			return err
 		}
-		defer f.Close()
+		defer func() {
+			if err := f.Close(); err != nil {
+				fmt.Fprintf(os.Stderr, "Troubles while closing file: %v", err)
+			}
+		}()
 
 		meta, err := decode(metaschemaDir, goModule, f)
 		if err != nil {
@@ -57,7 +61,11 @@ func decode(metaschemaDir, goModule string, r io.Reader) (*parser.Metaschema, er
 		if err != nil {
 			return nil, err
 		}
-		defer imf.Close()
+		defer func() {
+			if err := imf.Close(); err != nil {
+				fmt.Fprintf(os.Stderr, "Troubles while closing file: %v", err)
+			}
+		}()
 
 		fmt.Printf("  Processing imported href: %s\n", imported.Href.URL.String())
 		importedMeta, err := decode(metaschemaDir, goModule, imf)

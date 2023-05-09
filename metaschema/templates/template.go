@@ -39,7 +39,7 @@ func GenerateAll(metaschema *parser.Metaschema, baseDir string) error {
 }
 
 func executeTemplate(t *template.Template, metaschema *parser.Metaschema, filename string) error {
-	f, err := os.Create(filename)
+	f, err := os.Create(filename) // #nosec G304
 	if err != nil {
 		return err
 	}
@@ -92,13 +92,13 @@ func newTemplate(baseDir, templateName string) (*template.Template, error) {
 }
 
 func ensurePkgDir(metaschema *parser.Metaschema, baseDir string) (string, error) {
-	dir := filepath.Join(baseDir, metaschema.GoPackageName())
+	dir := filepath.Join(baseDir, filepath.Clean(metaschema.GoPackageName()))
 	err := os.MkdirAll(dir, os.FileMode(0722))
 	return dir, err
 }
 
 func noop() { //nolint:golint,unused
 	// Hint pkger tool to bundle these files
-	pkger.Include("/metaschema/templates/generated_models.tmpl") // nolint:staticcheck
+	pkger.Include("/metaschema/templates/generated_models.tmpl")       // nolint:staticcheck
 	pkger.Include("/metaschema/templates/generated_multiplexers.tmpl") // nolint:staticcheck
 }
