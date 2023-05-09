@@ -6,7 +6,7 @@ import (
 
 // Multiplexer represents model to be generated in go code that does not exists in the metaschema.
 // Such model is only needed for serialization&deserialization as json and xml schemas differ
-//materially in their structure.
+// materially in their structure.
 type Multiplexer struct {
 	MultiplexedModel MultiplexedModel
 	Metaschema       *Metaschema
