@@ -97,7 +97,7 @@ func ensurePkgDir(metaschema *parser.Metaschema, baseDir string) (string, error)
 	return dir, err
 }
 
-func noop() {
+func noop() { //nolint:golint,unused
 	// Hint pkger tool to bundle these files
 	pkger.Include("/metaschema/templates/generated_models.tmpl")
 	pkger.Include("/metaschema/templates/generated_multiplexers.tmpl")
