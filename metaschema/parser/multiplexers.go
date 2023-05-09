@@ -50,8 +50,8 @@ func (metaschema *Metaschema) getMultiplexer(name string) *Multiplexer {
 func (metaschema *Metaschema) calculateMultiplexers() []Multiplexer {
 	uniq := map[string]Multiplexer{}
 	for _, da := range metaschema.DefineAssembly {
-		for i, a := range da.Model.Assembly {
-			if requiresMultiplexer(&a) {
+		for i := range da.Model.Assembly {
+			if requiresMultiplexer(&da.Model.Assembly[i]) {
 				mplex := Multiplexer{
 					MultiplexedModel: &da.Model.Assembly[i],
 					Metaschema:       metaschema,
@@ -64,8 +64,8 @@ func (metaschema *Metaschema) calculateMultiplexers() []Multiplexer {
 				}
 			}
 		}
-		for i, f := range da.Model.Field {
-			if requiresMultiplexer(&f) {
+		for i := range da.Model.Field {
+			if requiresMultiplexer(&da.Model.Field[i]) {
 				mplex := Multiplexer{
 					MultiplexedModel: &da.Model.Field[i],
 					Metaschema:       metaschema,
