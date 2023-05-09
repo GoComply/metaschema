@@ -29,8 +29,8 @@ jobs:
 
     - name: Ensure clean git
       run: |
-        if [ "$(gofmt -s -l ./cli ./pkg ./tests | wc -l)" -gt 0 ]; then
-            gofmt -s -l -d ./cli ./pkg ./tests
+        if [ "$(gofmt -s -l ./cli ./metaschema | wc -l)" -gt 0 ]; then
+            gofmt -s -l -d ./cli ./metaschema
             echo "Please run: go fmt ./..."
             exit 1
         fi
