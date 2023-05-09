@@ -1,6 +1,6 @@
 module github.com/gocomply/metaschema
 
-go 1.13
+go 1.16
 
 require (
 	github.com/iancoleman/strcase v0.2.0
