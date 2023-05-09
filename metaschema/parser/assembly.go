@@ -123,7 +123,6 @@ func (a *Assembly) XmlGroupping() string {
 		return a.GroupAs.Name + ">"
 	}
 	panic("Not implemented group-as/@in-xml=" + a.GroupAs.InXml)
-	return ""
 }
 
 func (a *Assembly) XmlAnnotation() string {

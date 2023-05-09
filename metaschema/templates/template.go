@@ -51,7 +51,7 @@ func executeTemplate(t *template.Template, metaschema *parser.Metaschema, filena
 
 	p, err := format.Source(buf.Bytes())
 	if err != nil {
-		return errors.New(err.Error() + " in following file:\n" + string(buf.Bytes()))
+		return errors.New(err.Error() + " in following file:\n" + buf.String())
 	}
 
 	_, err = f.Write(p)
@@ -97,8 +97,8 @@ func ensurePkgDir(metaschema *parser.Metaschema, baseDir string) (string, error)
 	return dir, err
 }
 
-func noop() {
+func noop() { //nolint:golint,unused
 	// Hint pkger tool to bundle these files
-	pkger.Include("/metaschema/templates/generated_models.tmpl")
-	pkger.Include("/metaschema/templates/generated_multiplexers.tmpl")
+	pkger.Include("/metaschema/templates/generated_models.tmpl") // nolint:staticcheck
+	pkger.Include("/metaschema/templates/generated_multiplexers.tmpl") // nolint:staticcheck
 }

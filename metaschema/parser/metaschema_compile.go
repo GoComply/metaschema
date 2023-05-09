@@ -25,7 +25,7 @@ func (metaschema *Metaschema) registerDependency(name string, dependency GoType)
 }
 
 func (metaschema *Metaschema) linkItems(list []GoStructItem) error {
-	for i, _ := range list {
+	for i := range list {
 		err := list[i].compile(metaschema)
 		if err != nil {
 			return err
@@ -34,7 +34,7 @@ func (metaschema *Metaschema) linkItems(list []GoStructItem) error {
 	return nil
 }
 func (metaschema *Metaschema) linkAssemblies(list []Assembly) error {
-	for i, _ := range list {
+	for i := range list {
 		a := &list[i]
 		err := a.compile(metaschema)
 		if err != nil {
@@ -45,7 +45,7 @@ func (metaschema *Metaschema) linkAssemblies(list []Assembly) error {
 }
 
 func (metaschema *Metaschema) linkFields(list []Field) error {
-	for i, _ := range list {
+	for i := range list {
 		f := &list[i]
 		err := f.compile(metaschema)
 		if err != nil {
@@ -56,7 +56,7 @@ func (metaschema *Metaschema) linkFields(list []Field) error {
 }
 
 func (metaschema *Metaschema) linkFlags(list []Flag) error {
-	for i, _ := range list {
+	for i := range list {
 		f := &list[i]
 		err := f.compile(metaschema)
 		if err != nil {
