@@ -4,7 +4,6 @@ import (
 	"encoding/xml"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"os"
 	"strings"
 
@@ -13,7 +12,7 @@ import (
 )
 
 func Generate(metaschemaDir, goModule, outputDir string) error {
-	files, err := ioutil.ReadDir(metaschemaDir)
+	files, err := os.ReadDir(metaschemaDir)
 	if err != nil {
 		return err
 	}
