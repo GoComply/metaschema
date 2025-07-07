@@ -37,4 +37,4 @@ jobs:
     - name: generate go code for NIST OSCAL
       run: |
 
-        ./gocomply_metaschema generate ./OSCAL/src/metaschema github.com/gocomply/oscalkit types/oscal || :
+        ./gocomply_metaschema generate ./OSCAL/src/metaschema github.com/gocomply/oscalkit types/oscal
