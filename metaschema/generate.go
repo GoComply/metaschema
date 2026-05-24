@@ -1,7 +1,6 @@
 package metaschema
 
 import (
-	"encoding/xml"
 	"fmt"
 	"io"
 	"os"
@@ -9,6 +8,7 @@ import (
 
 	"github.com/gocomply/metaschema/metaschema/parser"
 	"github.com/gocomply/metaschema/metaschema/templates"
+	"github.com/gocomply/metaschema/pkg/xml_dtd"
 )
 
 func Generate(metaschemaDir, goModule, outputDir string) error {
@@ -46,7 +46,7 @@ func Generate(metaschemaDir, goModule, outputDir string) error {
 func decode(metaschemaDir, goModule string, r io.Reader) (*parser.Metaschema, error) {
 	var meta parser.Metaschema
 
-	d := xml.NewDecoder(r)
+	d := xml_dtd.NewDecoder(r)
 
 	if err := d.Decode(&meta); err != nil {
 		return nil, fmt.Errorf("Error decoding metaschema: %s", err)
